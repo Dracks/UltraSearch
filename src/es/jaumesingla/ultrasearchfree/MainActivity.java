@@ -1,10 +1,13 @@
-package es.jaumesingla.ultrasearch;
+package es.jaumesingla.ultrasearchfree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import es.jaumesingla.ultrasearch.threads.ChargeInfo;
-import es.jaumesingla.ultrasearch.threads.RefreshList;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
+import es.jaumesingla.ultrasearchfree.threads.ChargeInfo;
+import es.jaumesingla.ultrasearchfree.threads.RefreshList;
 
 import junit.framework.Assert;
 
@@ -17,7 +20,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Editable;
@@ -25,8 +27,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -37,8 +37,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-
-import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
 	
@@ -136,6 +134,11 @@ public class MainActivity extends Activity {
         
         listItems=(ListView)findViewById(R.id.resultSearch);
         listItems.setAdapter(listAdapter);
+        
+        AdRequest adRequest = new AdRequest();
+        adRequest.addTestDevice("565DD0971D493145303E3C0AA27960F7");
+        AdView adView = (AdView) this.findViewById(R.id.adView);
+        adView.loadAd(adRequest);
         
         
         listItems.setOnItemClickListener(new OnItemClickListener() {

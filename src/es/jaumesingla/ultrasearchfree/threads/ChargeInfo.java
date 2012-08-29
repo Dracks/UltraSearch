@@ -1,4 +1,4 @@
-package es.jaumesingla.ultrasearch.threads;
+package es.jaumesingla.ultrasearchfree.threads;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.util.Log;
 
-import es.jaumesingla.ultrasearch.MainActivity;
-import es.jaumesingla.ultrasearch.MainActivity.InfoPackage;
+import es.jaumesingla.ultrasearchfree.MainActivity;
+import es.jaumesingla.ultrasearchfree.MainActivity.InfoPackage;
 
 public class ChargeInfo implements Runnable {
 	private static final String TAG = "ChargeInfo";

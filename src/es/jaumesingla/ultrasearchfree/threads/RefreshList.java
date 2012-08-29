@@ -1,10 +1,10 @@
-package es.jaumesingla.ultrasearch.threads;
+package es.jaumesingla.ultrasearchfree.threads;
 
 import java.util.ArrayList;
 
-import es.jaumesingla.ultrasearch.MainActivity;
-import es.jaumesingla.ultrasearch.ResultsViewAdapter;
-import es.jaumesingla.ultrasearch.MainActivity.InfoPackage;
+import es.jaumesingla.ultrasearchfree.MainActivity;
+import es.jaumesingla.ultrasearchfree.ResultsViewAdapter;
+import es.jaumesingla.ultrasearchfree.MainActivity.InfoPackage;
 
 public class RefreshList implements Runnable {
 	private MainActivity dependence;

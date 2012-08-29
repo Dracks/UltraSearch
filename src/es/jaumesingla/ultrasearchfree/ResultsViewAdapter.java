@@ -1,4 +1,4 @@
-package es.jaumesingla.ultrasearch;
+package es.jaumesingla.ultrasearchfree;
 
 import java.util.ArrayList;
 
