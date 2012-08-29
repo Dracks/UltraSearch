@@ -34,6 +34,7 @@
             android:layout_gravity="center_vertical"
             android:src="@android:drawable/ic_menu_share" 
             android:background="#222"
+            android:visibility="gone"
             />
 
     </LinearLayout>
