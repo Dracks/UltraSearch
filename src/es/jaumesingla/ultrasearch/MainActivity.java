@@ -28,11 +28,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -101,6 +103,8 @@ public class MainActivity extends Activity {
 	private boolean refreshingOnProgress=false;
 	private String filter="";
 	
+	private EditText searcher;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,8 +135,6 @@ public class MainActivity extends Activity {
         listAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE), getPackageManager());
 		
 		Log.i(TAG, "Old");
-		
-		new Thread(new ChargeInfo(this)).start();
         
         listItems=(ListView)findViewById(R.id.resultSearch);
         listItems.setAdapter(listAdapter);
@@ -149,6 +151,8 @@ public class MainActivity extends Activity {
 		});
         
         EditText et=(EditText) findViewById(R.id.inputText);
+        //et.setSelectAllOnFocus(true);
+        searcher=et;
         et.setMaxLines(1);
         et.setOnEditorActionListener(new OnEditorActionListener() {
 			
@@ -162,7 +166,6 @@ public class MainActivity extends Activity {
 			}
 		});
         et.addTextChangedListener(new TextWatcher() {
-			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO Auto-generated method stub
@@ -186,7 +189,33 @@ public class MainActivity extends Activity {
 			}
 		});
         
+        ImageButton shareButton=(ImageButton) findViewById(R.id.shareButton);
+        shareButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent share=new Intent(Intent.ACTION_SEND);
+				share.setType("text/plain");
+				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
+				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
+				
+				startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+			}
+		});
+        
     }
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		new Thread(new ChargeInfo(this)).start();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		searcher.setSelection(0, filter.length());
+	}
 	
 	protected void launchFirst(){
 		if (listAdapter.getCount()>0)
