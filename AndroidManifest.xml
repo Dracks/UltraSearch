@@ -18,12 +18,12 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"/>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".share.ShareLimitedActivity" android:theme="@android:style/Theme.Dialog">
+        <activity android:name=".share.ShareLimitedActivity" android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
             
         </activity>
         <activity android:name="com.google.ads.AdActivity" 

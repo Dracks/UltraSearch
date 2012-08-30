@@ -241,10 +241,11 @@ public class MainActivity extends Activity {
 	
 	private void disableAdsMoreTime() {
 		long now=System.currentTimeMillis()/1000;
+		long addTime=DAYS_FREE_PRESENT;
 		if (timeBloquedAds<now){
-			timeBloquedAds=now+DAYS_FREE_PRESENT*24*3600;
+			timeBloquedAds=now+addTime;
 		} else {
-			timeBloquedAds+=DAYS_FREE_PRESENT*24*3600;
+			timeBloquedAds+=addTime;
 		}
 		
 		findViewById(R.id.adView).setVisibility(View.GONE);
