@@ -7,9 +7,11 @@ import es.jaumesingla.ultrasearch.threads.RefreshList;
 
 import junit.framework.Assert;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 //import android.app.Activity;
 
 import android.annotation.SuppressLint;
@@ -35,6 +37,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -148,6 +151,7 @@ public class MainActivity extends Activity {
 			}
 		});
         
+        
         EditText et=(EditText) findViewById(R.id.inputText);
         //et.setSelectAllOnFocus(true);
         searcher=et;
@@ -238,6 +242,13 @@ public class MainActivity extends Activity {
 			t.show();
 		}
 		//}
+	}
+	
+	public void viewInfo(int element){
+		String mCurrentPkgName=listAdapter.getItem(element).activityInfo.packageName;
+		 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package", mCurrentPkgName, null));
+		 // start new activity to display extended information
+		 startActivity(intent);
 	}
 
 	/*
