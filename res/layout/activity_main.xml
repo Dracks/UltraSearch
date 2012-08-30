@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#222"
+        style="@style/AppTheme.TopMenu"
          >
 
         <ImageView
@@ -24,11 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:textColor="#eeeeee"
-            android:textCursorDrawable="@null"
             android:ems="10" 
             android:inputType="textFilter"
-            android:imeOptions="flagNoFullscreen"/>
+            android:imeOptions="flagNoFullscreen"
+            style="@style/AppTheme.TopMenu"/>
 
         <ImageButton
             android:id="@+id/shareButton"

@@ -1,5 +1,9 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Holo.Light" />
+     <style name="AppTheme.TopMenu">
+        <item name='android:textColor'>#eeeeee</item>
+        <item name='android:textCursorDrawable'>@null</item>
+    </style>
 
 </resources>
