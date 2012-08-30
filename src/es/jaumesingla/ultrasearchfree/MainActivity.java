@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -217,7 +218,7 @@ public class MainActivity extends Activity {
 				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
 				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
 				
-				share.putExtra(ShareLimitedActivity.FILTER_NAME, "twitter|twee|plus|whatsapp|facebook");
+				share.putExtra(ShareLimitedActivity.FILTER_NAME, "twitter|plus|facebook");
 				share.putExtra(ShareLimitedActivity.TITLE_WINDOW, getString(R.string.shareTitle));
 				share.putExtra(ShareLimitedActivity.KEY_APPLICATION_NOT_FOUND, getString(R.string.app_not_found));
 				
@@ -245,14 +246,25 @@ public class MainActivity extends Activity {
 		} else {
 			timeBloquedAds+=DAYS_FREE_PRESENT*24*3600;
 		}
+		
+		findViewById(R.id.adView).setVisibility(View.GONE);
 		SharedPreferences.Editor settings = getSharedPreferences(dataName, 0).edit();
 		settings.putLong(TIME_BLOQUED_ADS, timeBloquedAds);
 		settings.commit();
 		
-		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 		alertDialog.setTitle(getString(R.string.thanks));
 		alertDialog.setMessage(String.format(getString(R.string.thanksText), DAYS_FREE_PRESENT));
-		alertDialog.show();
+		alertDialog.setCancelable(true);
+		//alertDialog.setCancelMessage("OK");
+		alertDialog.setPositiveButton("OK", new AlertDialog.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+
+		});
+		alertDialog.create().show();
 	}
 
 	@Override
