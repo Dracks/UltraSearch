@@ -1,7 +1,6 @@
 package es.jaumesingla.ultrasearch;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
 import es.jaumesingla.ultrasearch.threads.RefreshList;
@@ -17,7 +16,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Editable;
@@ -25,8 +23,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -39,8 +35,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
-
-import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
 	
@@ -208,7 +202,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		new Thread(new ChargeInfo(this)).start();
+		if (this.listPackages.size()==0){
+			new Thread(new ChargeInfo(this)).start();
+		}
 	}
 	
 	@Override
@@ -262,12 +258,10 @@ public class MainActivity extends Activity {
 		return listAdapter;
 	}
 
-	public void setListAdapter(ResultsViewAdapter listAdapter) {
+	public void setContentListAdapter(ArrayList<ResolveInfo> data) {
 		synchronized (this) {
-			this.listAdapter = listAdapter;
-			listItems.setAdapter(listAdapter);
+			this.listAdapter.setData(data);
 		}
-		listAdapter.notifyDataSetChanged();
 	}
 
 	public ArrayList<InfoPackage> getListPackages() {
