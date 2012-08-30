@@ -11,10 +11,13 @@ import es.jaumesingla.ultrasearchfree.threads.RefreshList;
 
 import junit.framework.Assert;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 //import android.app.Activity;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -25,11 +28,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -43,6 +49,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class MainActivity extends Activity {
 	
 	
@@ -115,12 +122,9 @@ public class MainActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //if (Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB){
-        	this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //}
         setContentView(R.layout.activity_main);
         ViewGroup actionBar=(ViewGroup) findViewById(R.id.llActionBar);
-        /*if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB){
         	ViewGroup parent= (ViewGroup)actionBar.getParent();
         	parent.removeView(actionBar);
         	Assert.assertNotNull(getActionBar());
@@ -301,8 +305,8 @@ public class MainActivity extends Activity {
 		//}
 	}
 
-
-    /*@Override
+	/*
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
@@ -317,7 +321,7 @@ public class MainActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }//*/
 
 	public ResultsViewAdapter getListAdapter() {
 		return listAdapter;
