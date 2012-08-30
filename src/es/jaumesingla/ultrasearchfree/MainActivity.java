@@ -1,11 +1,13 @@
 package es.jaumesingla.ultrasearchfree;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
+import es.jaumesingla.ultrasearchfree.share.ShareLimitedActivity;
 import es.jaumesingla.ultrasearchfree.threads.ChargeInfo;
 import es.jaumesingla.ultrasearchfree.threads.RefreshList;
 
@@ -16,10 +18,12 @@ import android.os.Handler;
 //import android.app.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.Editable;
@@ -28,11 +32,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -41,6 +47,10 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	
 	
+	protected static final int SHARE_ACTION = 0;
+	private final int DAYS_FREE_PRESENT=15;
+	private static final String dataName = "QuickSearchData";
+	private static final String TIME_BLOQUED_ADS = "timeBloquedAds";
 	private final String TAG="MainActivity";
 	
 	public class InfoPackage{
@@ -99,6 +109,10 @@ public class MainActivity extends Activity {
 	private boolean refreshingOnProgress=false;
 	private String filter="";
 	
+	private long timeBloquedAds;
+	
+	private EditText searcher;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +130,9 @@ public class MainActivity extends Activity {
         } //else {*/
         	
        // }
+        
+        SharedPreferences settings = getSharedPreferences(dataName, 0);
+        timeBloquedAds=settings.getLong(TIME_BLOQUED_ADS, 0);
         actionBar.setVisibility(View.VISIBLE);
         
         listPackages=new ArrayList<InfoPackage>();
@@ -129,16 +146,16 @@ public class MainActivity extends Activity {
         listAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE), getPackageManager());
 		
 		Log.i(TAG, "Old");
-		
-		new Thread(new ChargeInfo(this)).start();
         
         listItems=(ListView)findViewById(R.id.resultSearch);
         listItems.setAdapter(listAdapter);
         
-        AdRequest adRequest = new AdRequest();
-        adRequest.addTestDevice("565DD0971D493145303E3C0AA27960F7");
-        AdView adView = (AdView) this.findViewById(R.id.adView);
-        adView.loadAd(adRequest);
+        if (timeBloquedAds<System.currentTimeMillis()/1000){
+	        AdRequest adRequest = new AdRequest();
+	        adRequest.addTestDevice("565DD0971D493145303E3C0AA27960F7");
+	        AdView adView = (AdView) this.findViewById(R.id.adView);
+	        adView.loadAd(adRequest);
+        }
         
         
         listItems.setOnItemClickListener(new OnItemClickListener() {
@@ -152,6 +169,8 @@ public class MainActivity extends Activity {
 		});
         
         EditText et=(EditText) findViewById(R.id.inputText);
+        //et.setSelectAllOnFocus(true);
+        searcher=et;
         et.setMaxLines(1);
         et.setOnEditorActionListener(new OnEditorActionListener() {
 			
@@ -165,7 +184,6 @@ public class MainActivity extends Activity {
 			}
 		});
         et.addTextChangedListener(new TextWatcher() {
-			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO Auto-generated method stub
@@ -189,7 +207,65 @@ public class MainActivity extends Activity {
 			}
 		});
         
+        ImageButton shareButton=(ImageButton) findViewById(R.id.shareButton);
+        shareButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent share=new Intent(MainActivity.this,ShareLimitedActivity.class);
+				share.setType("text/plain");
+				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
+				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
+				
+				share.putExtra(ShareLimitedActivity.FILTER_NAME, "twitter|twee|plus|whatsapp|facebook");
+				share.putExtra(ShareLimitedActivity.TITLE_WINDOW, getString(R.string.shareTitle));
+				share.putExtra(ShareLimitedActivity.KEY_APPLICATION_NOT_FOUND, getString(R.string.app_not_found));
+				
+				//startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+				startActivityForResult(share, SHARE_ACTION);
+			}
+		});
+        
     }
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode==SHARE_ACTION){
+			if (resultCode==RESULT_OK){
+				this.disableAdsMoreTime();
+			}
+		}
+	}
+	
+	private void disableAdsMoreTime() {
+		long now=System.currentTimeMillis()/1000;
+		if (timeBloquedAds<now){
+			timeBloquedAds=now+DAYS_FREE_PRESENT*24*3600;
+		} else {
+			timeBloquedAds+=DAYS_FREE_PRESENT*24*3600;
+		}
+		SharedPreferences.Editor settings = getSharedPreferences(dataName, 0).edit();
+		settings.putLong(TIME_BLOQUED_ADS, timeBloquedAds);
+		settings.commit();
+		
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle(getString(R.string.thanks));
+		alertDialog.setMessage(String.format(getString(R.string.thanksText), DAYS_FREE_PRESENT));
+		alertDialog.show();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		new Thread(new ChargeInfo(this)).start();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		searcher.setSelection(0, filter.length());
+	}
 	
 	protected void launchFirst(){
 		if (listAdapter.getCount()>0)
