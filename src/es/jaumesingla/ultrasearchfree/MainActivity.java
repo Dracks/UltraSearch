@@ -185,14 +185,12 @@ public class MainActivity extends Activity {
         et.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -239,7 +237,7 @@ public class MainActivity extends Activity {
 	
 	private void disableAdsMoreTime() {
 		long now=System.currentTimeMillis()/1000;
-		long addTime=DAYS_FREE_PRESENT;
+		long addTime=DAYS_FREE_PRESENT*24*3600;
 		if (timeBloquedAds<now){
 			timeBloquedAds=now+addTime;
 		} else {
@@ -269,7 +267,9 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		new Thread(new ChargeInfo(this)).start();
+		if (this.listPackages.size()==0){
+			new Thread(new ChargeInfo(this)).start();
+		}
 	}
 	
 	@Override
@@ -323,12 +323,10 @@ public class MainActivity extends Activity {
 		return listAdapter;
 	}
 
-	public void setListAdapter(ResultsViewAdapter listAdapter) {
+	public void setContentListAdapter(ArrayList<ResolveInfo> data) {
 		synchronized (this) {
-			this.listAdapter = listAdapter;
-			listItems.setAdapter(listAdapter);
+			this.listAdapter.setData(data);
 		}
-		listAdapter.notifyDataSetChanged();
 	}
 
 	public ArrayList<InfoPackage> getListPackages() {

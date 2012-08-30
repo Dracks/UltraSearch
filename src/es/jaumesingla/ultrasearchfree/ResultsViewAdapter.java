@@ -35,6 +35,11 @@ public class ResultsViewAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 	
+	public void setData(ArrayList<ResolveInfo> data){
+		listContents=data;
+		notifyDataSetChanged();
+	}
+	
 	@Override
 	public int getCount() {
 		return listContents.size();

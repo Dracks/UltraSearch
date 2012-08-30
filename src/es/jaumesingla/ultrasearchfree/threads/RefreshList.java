@@ -3,8 +3,9 @@ package es.jaumesingla.ultrasearchfree.threads;
 import java.util.ArrayList;
 
 import es.jaumesingla.ultrasearchfree.MainActivity;
-import es.jaumesingla.ultrasearchfree.ResultsViewAdapter;
 import es.jaumesingla.ultrasearchfree.MainActivity.InfoPackage;
+
+import android.content.pm.ResolveInfo;
 
 public class RefreshList implements Runnable {
 	private MainActivity dependence;
@@ -14,20 +15,21 @@ public class RefreshList implements Runnable {
 	}
 	
 	public class sendRefresh implements Runnable{
-		ResultsViewAdapter newAdapter;
-		public sendRefresh(ResultsViewAdapter nAdapter){
-			newAdapter=nAdapter;
+		ArrayList<ResolveInfo> newData;
+		public sendRefresh(ArrayList<ResolveInfo> nData){
+			newData=nData;
 		}
 		@Override
 		public void run() {
-			RefreshList.this.dependence.setListAdapter(newAdapter);
+			RefreshList.this.dependence.setContentListAdapter(newData);
 		}
 		
 	}
 	@Override
 	public void run() {
 		dependence.refreshOnProgress();
-		ResultsViewAdapter newAdapter=new ResultsViewAdapter(dependence.getLayoutInflater(), dependence.getPackageManager());
+		//ResultsViewAdapter newAdapter=new ResultsViewAdapter(dependence.getLayoutInflater(), dependence.getPackageManager());
+		ArrayList<ResolveInfo> newData=new ArrayList<ResolveInfo>();
 		ArrayList<MainActivity.InfoPackage> listPrograms=null;
 		String filter=null;
 		synchronized (dependence) {
@@ -37,11 +39,11 @@ public class RefreshList implements Runnable {
 		
 		for (InfoPackage ip: listPrograms){
 			if (ip.contains(filter)){
-				newAdapter.add(ip.getData());
+				newData.add(ip.getData());
 			}
 		}
 		
-		dependence.getHandlerView().post(new sendRefresh(newAdapter));
+		dependence.getHandlerView().post(new sendRefresh(newData));
 		dependence.finishRefresh();
 	}
 
