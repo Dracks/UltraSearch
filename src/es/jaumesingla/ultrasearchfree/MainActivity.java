@@ -1,8 +1,6 @@
 package es.jaumesingla.ultrasearchfree;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
