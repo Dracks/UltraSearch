@@ -7,6 +7,7 @@
 
     <ListView
         android:id="@+id/LVApps"
+        style="@style/AppTheme.Dialog.Content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="3dip" >

@@ -6,5 +6,7 @@
         <item name='android:textColor'>#eeeeee</item>
         <item name='android:textCursorDrawable'>@null</item>
     </style>
-
+     <style name="AppTheme.Dialog" parent="android:style/Theme.DeviceDefault.Light.Dialog"></style>
+     <style name="AppTheme.Dialog.Content"/>
+     <style name="AppTheme.TextCell" />
 </resources>

@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".share.ShareLimitedActivity" android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
+        <activity android:name=".share.ShareLimitedActivity" android:theme="@style/AppTheme.Dialog">
             
         </activity>
         <activity android:name="com.google.ads.AdActivity" 

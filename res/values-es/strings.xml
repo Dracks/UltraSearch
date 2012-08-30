@@ -1,11 +1,13 @@
 <resources>
     
-    <string name="app_name">Quick Apps Search</string>
+    <string name="app_name">Quick Apps Search Free</string>
     <string name="menu_settings">Ajustes</string>
     <string name="title_activity_main">Quick Search</string>
     <string name="app_not_found">No se encuentra aplicación</string>
     <string name="shareTextTitle">Búsqueda rápida y lanzado de aplicaciones</string>
     <string name="shareText">Búsqueda rápida y lanzado de aplicaciones con la aplicación %1$s \nhttp://play.google.com/store/apps/details?id=%2$s</string>
     <string name="shareTitle">Comparte con tus amigos</string>
+    <string name="thanks">¡Gracias por compartir!</string>
+    <string name="thanksText">Gracias por compartir esta aplicación, por hacerlo recibirá %1$d días sin ads en la aplicación.</string>
 
 </resources>

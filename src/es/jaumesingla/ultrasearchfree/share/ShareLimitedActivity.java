@@ -72,6 +72,7 @@ public class ShareLimitedActivity extends Activity {
 	        	holder = new ViewHolder();
 	        	holder.icon=(ImageView) convertView.findViewById(R.id.imgIcon);
 				holder.name=(TextView) convertView.findViewById(R.id.txtName);
+				//holder.name.setTextColor(getResources().getColor(R.style.AppTheme_Dialog_Content));
 	        	convertView.setTag(holder);
 	        }
 	        else{
