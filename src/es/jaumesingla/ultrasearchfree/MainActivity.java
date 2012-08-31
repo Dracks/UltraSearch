@@ -40,6 +40,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -179,7 +180,10 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode()==KeyEvent.KEYCODE_ENTER) { 
+				Log.i(TAG, "action:"+actionId);
+				//Assert.assertNotNull(event);
+				
+				if (EditorInfo.IME_ACTION_GO==actionId) { 
 					      MainActivity.this.launchFirst();//match this behavior to your 'Send' (or Confirm) button
 					      return true;
 				}
