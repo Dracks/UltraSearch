@@ -133,7 +133,7 @@ public class MainActivity extends Activity {
         
         handlerView=new Handler();
         
-        listAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE), getPackageManager());
+        listAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE),  this);
 		
 		Log.i(TAG, "Old");
         
@@ -244,12 +244,7 @@ public class MainActivity extends Activity {
 		//}
 	}
 	
-	public void viewInfo(int element){
-		String mCurrentPkgName=listAdapter.getItem(element).activityInfo.packageName;
-		 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package", mCurrentPkgName, null));
-		 // start new activity to display extended information
-		 startActivity(intent);
-	}
+	
 
 	/*
     @Override

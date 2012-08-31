@@ -2,13 +2,19 @@ package es.jaumesingla.ultrasearch;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,17 +23,18 @@ public class ResultsViewAdapter extends BaseAdapter {
 	private static class ViewHolder {
 		public TextView textView;
 		public ImageView imageView;
+		public Button infoView;
 	}
 
 	private ArrayList<ResolveInfo> listContents;
 	private LayoutInflater mInflater;
-	private PackageManager mPm;
+	private Context mContext;
 	
-	public ResultsViewAdapter(LayoutInflater inf, PackageManager pm){
+	public ResultsViewAdapter(LayoutInflater inf, Context c){
 		super();
 		mInflater=inf;
 		listContents=new ArrayList<ResolveInfo>();
-		mPm=pm;
+		mContext=c;
 	}
 	
 	public void add(ResolveInfo e){
@@ -56,7 +63,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		System.out.println("getView " + position + " " + convertView);
 		Log.d("MyCustomAdapter-getView", "getView " + position + " " + convertView);
 		ViewHolder holder = null;
@@ -67,6 +74,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.textView = (TextView)convertView.findViewById(R.id.txtName);
 			holder.imageView = (ImageView)convertView.findViewById(R.id.imgIcon);
+			holder.infoView = (Button) convertView.findViewById(R.id.btInfo);
 			//holder.labelPos = (TextView)convertView.findViewById(R.id.labelText);
 			assert(holder.textView!=null);
 			convertView.setTag(holder);
@@ -74,8 +82,16 @@ public class ResultsViewAdapter extends BaseAdapter {
 			holder = (ViewHolder)convertView.getTag();
 		}
 		ResolveInfo toShow=this.getItem(position);
-		holder.textView.setText(toShow.loadLabel(mPm));
-		holder.imageView.setImageDrawable(toShow.loadIcon(mPm));
+		PackageManager pm=mContext.getPackageManager();
+		holder.textView.setText(toShow.loadLabel(pm));
+		holder.imageView.setImageDrawable(toShow.loadIcon(pm));
+		holder.infoView.setOnClickListener(new OnClickListener() {
+			int e=position;
+			@Override
+			public void onClick(View v) {
+				ResultsViewAdapter.this.viewInfo(e);
+			}
+		});
 		
 		return convertView;
 
@@ -85,6 +101,13 @@ public class ResultsViewAdapter extends BaseAdapter {
 	
 	public void clear(){
 		listContents.clear();
+	}
+	
+	public void viewInfo(int element){
+		String mCurrentPkgName=this.getItem(element).activityInfo.packageName;
+		 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package", mCurrentPkgName, null));
+		 // start new activity to display extended information
+		 mContext.startActivity(intent);
 	}
 
 }

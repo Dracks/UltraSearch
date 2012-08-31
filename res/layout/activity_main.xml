@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:ems="10" 
             android:inputType="textFilter"
-            android:imeOptions="flagNoFullscreen"
+            android:imeOptions="flagNoFullscreen|actionGo"
             style="@style/AppTheme.TopMenu"/>
 
         <ImageButton
