@@ -27,17 +27,19 @@
             android:layout_weight="1"
             android:ems="10" 
             android:inputType="textFilter"
-            android:imeOptions="flagNoFullscreen"
+            android:imeOptions="flagNoFullscreen|actionGo"
             style="@style/AppTheme.TopMenu"/>
 
         <ImageButton
             android:id="@+id/shareButton"
+            android:contentDescription="@string/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="#222"
             android:padding="5dp"
-            android:src="@android:drawable/ic_menu_share" />
+            android:src="@android:drawable/ic_menu_share" 
+            />
 
     </LinearLayout>
     
