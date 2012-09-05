@@ -1,7 +1,16 @@
-package es.jaumesingla.ultrasearch;
+package es.jaumesingla.ultrasearch.search;
 
 import java.util.ArrayList;
 
+import es.jaumesingla.ultrasearch.Constants;
+import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearch.UltraSearchApp;
+import es.jaumesingla.ultrasearch.Constants.Preferences;
+import es.jaumesingla.ultrasearch.R.id;
+import es.jaumesingla.ultrasearch.R.layout;
+import es.jaumesingla.ultrasearch.R.menu;
+import es.jaumesingla.ultrasearch.R.string;
+import es.jaumesingla.ultrasearch.settings.SettingsActivity;
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
 import es.jaumesingla.ultrasearch.threads.RefreshList;
 
@@ -21,6 +30,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.support.v4.app.NavUtils;
@@ -40,6 +50,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,55 +63,17 @@ public class MainActivity extends Activity {
 	
 	private final String TAG="MainActivity";
 	
-	public class InfoPackage{
-		private ResolveInfo data;
-		private String name;
-		private String description;
-		private String packageName;
-		
-		public InfoPackage(ResolveInfo ai, PackageManager pm){
-			data=ai;
-			name=ai.loadLabel(pm).toString();
-			CharSequence d=ai.activityInfo.applicationInfo.loadDescription(pm);
-			if (d!=null){
-				description=d.toString();
-			} else {
-				description="";
-			}
-			packageName=ai.activityInfo.packageName;
-			Assert.assertNotNull(name);
-			Assert.assertNotNull(packageName);
-			Assert.assertNotNull(description);
-		}
-		
-		public boolean contains(String textOriginal){
-			String text=textOriginal.toLowerCase();
-			return name.toLowerCase().contains(text) || description.toLowerCase().contains(text) || packageName.contains(text);
-		}
-
-		public ResolveInfo getData() {
-			return data;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public String getDescription() {
-			return description;
-		}
-
-		public String getPackageName() {
-			return packageName;
-		}
-	}
+	public enum ListMode{LIST, GRID};
 
     //@SuppressLint("NewApi")
 	
 	private ResultsViewAdapter listAdapter;
+	private ResultsViewAdapter gridAdapter;
 	private ArrayList<InfoPackage> listPackages;
 	private Object blockRefreshRequire;
+	
 	private ListView listItems;
+	private GridView gridItems;
 	
 	private Handler handlerView;
 
@@ -109,6 +82,8 @@ public class MainActivity extends Activity {
 	private String filter="";
 	
 	private EditText searcher;
+	
+	private ListMode listMode;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,32 +101,44 @@ public class MainActivity extends Activity {
        // }
         actionBar.setVisibility(View.VISIBLE);
         
+        this.refreshSettings();
+        
         listPackages=new ArrayList<InfoPackage>();
         blockRefreshRequire=new Object();
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
-        //getActionBar().
      
         
         handlerView=new Handler();
         
-        listAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE),  this);
-		
-		Log.i(TAG, "Old");
+        listAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE),  this, R.layout.cell_value);
+        gridAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE),  this, R.layout.cell_grid);
         
-        listItems=(ListView)findViewById(R.id.resultSearch);
-        listItems.setAdapter(listAdapter);
-        
-        
-        listItems.setOnItemClickListener(new OnItemClickListener() {
+        OnItemClickListener launchItemClick = new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> adapter, View view, int item,
-					long group) {
+			public void onItemClick(AdapterView<?> adapter, View view, int item, long group) {
+				Log.d(TAG, "OnItemClickListener");
 				MainActivity.this.launchApp(listAdapter.getItem(item));
-				
 			}
-		});
+		};
         
+        listItems=(ListView)findViewById(R.id.resultSearchList);
+        listItems.setAdapter(listAdapter);
+        //listItems.setItemsCanFocus(false);
+        
+        listItems.setOnItemClickListener(launchItemClick);
+        
+        gridItems=(GridView) findViewById(R.id.resultSearchGrid);
+        gridItems.setAdapter(gridAdapter);
+        
+        gridItems.setOnItemClickListener(launchItemClick);
+        
+        if (listMode==ListMode.GRID){
+        	listItems.setVisibility(View.GONE);
+        	gridItems.setVisibility(View.VISIBLE);
+        } else {
+        	gridItems.setVisibility(View.GONE);
+        	listItems.setVisibility(View.VISIBLE);
+        }//*/
         
         EditText et=(EditText) findViewById(R.id.inputText);
         //et.setSelectAllOnFocus(true);
@@ -223,6 +210,21 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		searcher.setSelection(0, filter.length());
+		
+		this.refreshSettings();
+		
+		if (listMode==ListMode.GRID){
+        	listItems.setVisibility(View.GONE);
+        	gridItems.setVisibility(View.VISIBLE);
+        } else {
+        	gridItems.setVisibility(View.GONE);
+        	listItems.setVisibility(View.VISIBLE);
+        }
+	}
+	
+	private void refreshSettings(){
+		SharedPreferences preferences = UltraSearchApp.getInstance().getPreferences();
+        listMode=ListMode.valueOf(preferences.getString(Constants.Preferences.LIST_MODE_KEY, ListMode.LIST.toString()));
 	}
 	
 	protected void launchFirst(){
@@ -250,7 +252,6 @@ public class MainActivity extends Activity {
 	
 	
 
-	/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -264,17 +265,21 @@ public class MainActivity extends Activity {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.menu_settings:
+            	Intent settings=new Intent(this, SettingsActivity.class);
+            	startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
     }//*/
 
-	public ResultsViewAdapter getListAdapter() {
+	/*public ResultsViewAdapter getListAdapter() {
 		return listAdapter;
-	}
+	}//*/
 
 	public void setContentListAdapter(ArrayList<ResolveInfo> data) {
 		synchronized (this) {
 			this.listAdapter.setData(data);
+			this.gridAdapter.setData(data);
 		}
 	}
 

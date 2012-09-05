@@ -8,8 +8,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 //import android.util.Log;
 
-import es.jaumesingla.ultrasearch.MainActivity;
-import es.jaumesingla.ultrasearch.MainActivity.InfoPackage;
+import es.jaumesingla.ultrasearch.search.MainActivity;
+import es.jaumesingla.ultrasearch.search.InfoPackage;
 
 public class ChargeInfo implements Runnable {
 //	private static final String TAG = "ChargeInfo";
@@ -19,7 +19,7 @@ public class ChargeInfo implements Runnable {
 	
 	
 	public ChargeInfo(MainActivity base){
-		listPackages=new ArrayList<MainActivity.InfoPackage>();
+		listPackages=new ArrayList<InfoPackage>();
 		dependences=base;
 		pm=base.getPackageManager();
 	}
@@ -33,7 +33,7 @@ public class ChargeInfo implements Runnable {
 		List<ResolveInfo> listQuery=pm.queryIntentActivities(i, 0);
 		for (ResolveInfo rinfo: listQuery){
 			//Log.d(TAG, rinfo.activityInfo.name);
-			listPackages.add(dependences.new InfoPackage(rinfo, pm));
+			listPackages.add(new InfoPackage(rinfo, pm));
 		}
 		synchronized(dependences){
 			dependences.setListPackages(listPackages);

@@ -1,6 +1,9 @@
-package es.jaumesingla.ultrasearch;
+package es.jaumesingla.ultrasearch.search;
 
 import java.util.ArrayList;
+
+import es.jaumesingla.ultrasearch.R;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,15 +29,19 @@ public class ResultsViewAdapter extends BaseAdapter {
 		public Button infoView;
 	}
 
+	protected static final String TAG = "ResultsViewAdapter";
+
 	private ArrayList<ResolveInfo> listContents;
 	private LayoutInflater mInflater;
 	private Context mContext;
+	private int layoutId;
 	
-	public ResultsViewAdapter(LayoutInflater inf, Context c){
+	public ResultsViewAdapter(LayoutInflater inf, Context c, int layoutId){
 		super();
 		mInflater=inf;
 		listContents=new ArrayList<ResolveInfo>();
 		mContext=c;
+		this.layoutId=layoutId;
 	}
 	
 	public void add(ResolveInfo e){
@@ -64,12 +71,12 @@ public class ResultsViewAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		System.out.println("getView " + position + " " + convertView);
-		Log.d("MyCustomAdapter-getView", "getView " + position + " " + convertView);
+		//System.out.println("getView " + position + " " + convertView);
+		//Log.d("MyCustomAdapter-getView", "getView " + position + " " + convertView);
 		ViewHolder holder = null;
 		if (convertView == null) {
-			Log.d("MyCustomAdapter-getView", "Layout: " + R.layout.cell_value);
-			convertView = mInflater.inflate(R.layout.cell_value, null);
+			//Log.d("MyCustomAdapter-getView", "Layout: " + layoutId);
+			convertView = mInflater.inflate(layoutId, null);
 			assert(convertView!=null);
 			holder = new ViewHolder();
 			holder.textView = (TextView)convertView.findViewById(R.id.txtName);
@@ -78,6 +85,8 @@ public class ResultsViewAdapter extends BaseAdapter {
 			//holder.labelPos = (TextView)convertView.findViewById(R.id.labelText);
 			assert(holder.textView!=null);
 			convertView.setTag(holder);
+			holder.infoView.setFocusable(false);
+			holder.infoView.setFocusableInTouchMode(false);
 		} else {
 			holder = (ViewHolder)convertView.getTag();
 		}
@@ -92,6 +101,14 @@ public class ResultsViewAdapter extends BaseAdapter {
 				ResultsViewAdapter.this.viewInfo(e);
 			}
 		});
+		
+		/*convertView.setOnClickListener(new OnClickListener() {
+			int e=position;
+			@Override
+			public void onClick(View v) {
+				Log.d(TAG, "onClickLister");
+			}
+		});*/
 		
 		return convertView;
 

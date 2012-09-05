@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import android.content.pm.ResolveInfo;
 
-import es.jaumesingla.ultrasearch.MainActivity;
-import es.jaumesingla.ultrasearch.MainActivity.InfoPackage;
+import es.jaumesingla.ultrasearch.search.MainActivity;
+import es.jaumesingla.ultrasearch.search.InfoPackage;
 
 public class RefreshList implements Runnable {
 	private MainActivity dependence;
@@ -30,7 +30,7 @@ public class RefreshList implements Runnable {
 		dependence.refreshOnProgress();
 		//ResultsViewAdapter newAdapter=new ResultsViewAdapter(dependence.getLayoutInflater(), dependence.getPackageManager());
 		ArrayList<ResolveInfo> newData=new ArrayList<ResolveInfo>();
-		ArrayList<MainActivity.InfoPackage> listPrograms=null;
+		ArrayList<InfoPackage> listPrograms=null;
 		String filter=null;
 		synchronized (dependence) {
 			listPrograms=dependence.getListPackages();

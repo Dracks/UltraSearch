@@ -44,11 +44,18 @@
     </LinearLayout>
     
     <ListView
-        android:id="@+id/resultSearch"
+        android:id="@+id/resultSearchList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
       >
 
     </ListView>
+
+    <GridView
+        android:id="@+id/resultSearchGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3" >
+    </GridView>
 
 </LinearLayout>
