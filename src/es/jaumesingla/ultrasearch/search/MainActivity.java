@@ -76,6 +76,8 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	
 	private ListMode listMode;
 	
+	private View cellGrid;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,11 @@ public class MainActivity extends Activity implements DataBaseChanged{
        // }
         actionBar.setVisibility(View.VISIBLE);
         
+        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        
+        cellGrid=inflater.inflate(R.layout.cell_grid, null);
+        
+        
         this.refreshSettings();
         
         listPackages=new ArrayList<InfoLaunchApplication>();
@@ -100,8 +107,8 @@ public class MainActivity extends Activity implements DataBaseChanged{
         
         handlerView=new Handler();
         
-        listAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE),  this, R.layout.cell_value);
-        gridAdapter=new ResultsViewAdapter((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE),  this, R.layout.cell_grid);
+        listAdapter=new ResultsViewAdapter(inflater,  this, R.layout.cell_value);
+        gridAdapter=new ResultsViewAdapter(inflater,  this, R.layout.cell_grid);
         
         OnItemClickListener launchItemClick = new OnItemClickListener() {
 
