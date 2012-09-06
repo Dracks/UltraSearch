@@ -5,25 +5,26 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 //import android.util.Log;
 
+import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.MainActivity;
 
 public class ChargeInfo implements Runnable {
 //	private static final String TAG = "ChargeInfo";
 	private ArrayList<InfoLaunchApplication> listPackages;
-	private MainActivity dependences;
+	//private MainActivity dependences;
 	private PackageManager pm;
 	
 	
-	public ChargeInfo(MainActivity base){
+	public ChargeInfo(Context c){
 		listPackages=new ArrayList<InfoLaunchApplication>();
-		dependences=base;
-		pm=base.getPackageManager();
+		pm=c.getPackageManager();
 	}
 	@Override
 	public void run() {
@@ -53,9 +54,7 @@ public class ChargeInfo implements Runnable {
 			
 			listPackages.add(new InfoLaunchApplication(name, ic,activity, packageName, description));
 		}
-		synchronized(dependences){
-			dependences.setListPackages(listPackages);
-		}
+		
+		UltraSearchApp.getInstance().chargeDataBase(listPackages);
 	}
-	
 }

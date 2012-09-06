@@ -5,23 +5,17 @@ import java.util.ArrayList;
 import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
-import es.jaumesingla.ultrasearch.Constants.Preferences;
-import es.jaumesingla.ultrasearch.R.id;
-import es.jaumesingla.ultrasearch.R.layout;
-import es.jaumesingla.ultrasearch.R.menu;
-import es.jaumesingla.ultrasearch.R.string;
+import es.jaumesingla.ultrasearch.UltraSearchApp.DataBaseChanged;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.settings.SettingsActivity;
-import es.jaumesingla.ultrasearch.threads.ChargeInfo;
 import es.jaumesingla.ultrasearch.threads.RefreshList;
 
 import junit.framework.Assert;
 
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 //import android.app.Activity;
 
 import android.annotation.SuppressLint;
@@ -32,8 +26,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,11 +37,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -59,7 +49,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements DataBaseChanged{
 	
 	
 	private final String TAG="MainActivity";
@@ -200,14 +190,6 @@ public class MainActivity extends Activity {
     }
 	
 	@Override
-	protected void onStart() {
-		super.onStart();
-		if (this.listPackages.size()==0){
-			new Thread(new ChargeInfo(this)).start();
-		}
-	}
-	
-	@Override
 	protected void onResume() {
 		super.onResume();
 		searcher.setSelection(0, filter.length());
@@ -221,6 +203,19 @@ public class MainActivity extends Activity {
         	gridItems.setVisibility(View.GONE);
         	listItems.setVisibility(View.VISIBLE);
         }
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		UltraSearchApp.getInstance().registerOnDataBaseChanged(this);
+		this.onDataBaseChanged();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		UltraSearchApp.getInstance().unregisterOnDataBaseChanged(this);
 	}
 	
 	private void refreshSettings(){
@@ -248,7 +243,6 @@ public class MainActivity extends Activity {
 					R.string.app_not_found, Toast.LENGTH_SHORT);
 			t.show();
 		}
-		//}
 	}
 	
 	
@@ -271,7 +265,9 @@ public class MainActivity extends Activity {
             	startActivity(settings);
         }
         return super.onOptionsItemSelected(item);
-    }//*/
+    }
+    
+    //*/
 
 	/*public ResultsViewAdapter getListAdapter() {
 		return listAdapter;
@@ -289,6 +285,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void setListPackages(ArrayList<InfoLaunchApplication> listPackages) {
+		Log.d(TAG, "listPackages.size:"+listPackages.size());
 		this.listPackages = listPackages;
 		this.setRequireRefresh();
 	}
@@ -302,6 +299,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void setRequireRefresh(){
+		//Log.d(TAG, "setRequireRefresh:"+refreshingOnProgress+","+requireRefresh);
 		synchronized(blockRefreshRequire){
 			if (refreshingOnProgress){
 				requireRefresh=true;
@@ -312,6 +310,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void finishRefresh(){
+		//Log.d(TAG, "finishRefresh:"+refreshingOnProgress+","+requireRefresh);
 		synchronized (blockRefreshRequire) {
 			refreshingOnProgress=false;
 			if (requireRefresh){
@@ -321,6 +320,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void refreshOnProgress(){
+		//Log.d(TAG, "refreshOnProgress:"+refreshingOnProgress+","+requireRefresh);
 		synchronized(blockRefreshRequire){
 			requireRefresh=false;
 			refreshingOnProgress=true;
@@ -332,7 +332,26 @@ public class MainActivity extends Activity {
 	}
 
 	public String getFilter() {
-		// TODO Auto-generated method stub
 		return filter;
+	}
+
+	@Override
+	public void onDataBaseChanged() {
+		(new AsyncTask<Integer, Integer, ArrayList<InfoLaunchApplication>>() {
+
+			@Override
+			protected ArrayList<InfoLaunchApplication> doInBackground(Integer... params) {
+				return UltraSearchApp.getInstance().getDataBase().getApplications().getApplications();
+			}
+			
+			@Override
+			protected void onPostExecute(ArrayList<InfoLaunchApplication> result) {
+				super.onPostExecute(result);
+				//Log.d(TAG, "onPostExecute- size:"+result.size());
+				MainActivity.this.setListPackages(result);
+				MainActivity.this.setRequireRefresh();
+			}
+		}).execute();
+		
 	}
 }

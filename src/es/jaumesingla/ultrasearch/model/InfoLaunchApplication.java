@@ -12,21 +12,6 @@ public class InfoLaunchApplication{
 	private int iconId;
 	private String packageName;
 	
-	/*public InfoLaunchApplication(ResolveInfo ai, PackageManager pm){
-		data=ai;
-		name=ai.loadLabel(pm).toString();
-		CharSequence d=ai.activityInfo.applicationInfo.loadDescription(pm);
-		if (d!=null){
-			description=d.toString();
-		} else {
-			description="";
-		}
-		packageName=ai.activityInfo.packageName;
-		Assert.assertNotNull(name);
-		Assert.assertNotNull(packageName);
-		Assert.assertNotNull(description);
-	}*/
-	
 	public InfoLaunchApplication(String name, int icon, String activity, String packageName, String description){
 		Assert.assertNotNull(name);
 		Assert.assertNotNull(packageName);
@@ -62,5 +47,10 @@ public class InfoLaunchApplication{
 	
 	public int getIcon(){
 		return this.iconId;
+	}
+	
+	@Override
+	public String toString() {
+		return "InfoLaunchApplication{"+this.name+","+this.activity+","+this.packageName+"}";
 	}
 }

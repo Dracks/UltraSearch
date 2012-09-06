@@ -1,6 +1,7 @@
 package es.jaumesingla.ultrasearch.database;
 
 import es.jaumesingla.ultrasearch.Constants;
+import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.Constants.Database;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,8 +13,6 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 	
-	
-	
 	public SQLiteHelper(Context context) {
 		super(context, Constants.Database.NAME, null, Constants.Database.VERSION);
 	}
@@ -23,6 +22,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		Scheme.Applications.create(db);
 		Scheme.Documents.create(db);
 		Scheme.Statistics.create(db);
+		UltraSearchApp.getInstance().launchRefreshDataBase();
 	}
 
 	@Override

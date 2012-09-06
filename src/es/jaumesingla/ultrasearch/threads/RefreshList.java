@@ -2,12 +2,16 @@ package es.jaumesingla.ultrasearch.threads;
 
 import java.util.ArrayList;
 
+import junit.framework.Assert;
+
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.MainActivity;
 
 public class RefreshList implements Runnable {
+	private static final String TAG = "RefreshList";
 	private MainActivity dependence;
 	
 	public RefreshList(MainActivity base){
@@ -36,10 +40,14 @@ public class RefreshList implements Runnable {
 			listPrograms=dependence.getListPackages();
 			filter=dependence.getFilter();
 		}
-		PackageManager pm=dependence.getPackageManager();
+		Assert.assertNotNull(filter);
+		Assert.assertNotNull(listPrograms);
+		//Log.d(TAG, filter+ "vs"+ listPrograms.size());
+		//PackageManager pm=dependence.getPackageManager();
 		
 		for (InfoLaunchApplication ip: listPrograms){
 			if (ip.contains(filter)){
+				//Log.d(TAG, "filter-ok:"+ip);
 				newData.add(ip);
 			}
 		}
