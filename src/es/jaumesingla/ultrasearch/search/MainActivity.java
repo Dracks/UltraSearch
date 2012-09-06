@@ -10,6 +10,7 @@ import es.jaumesingla.ultrasearch.R.id;
 import es.jaumesingla.ultrasearch.R.layout;
 import es.jaumesingla.ultrasearch.R.menu;
 import es.jaumesingla.ultrasearch.R.string;
+import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.settings.SettingsActivity;
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
 import es.jaumesingla.ultrasearch.threads.RefreshList;
@@ -69,7 +70,7 @@ public class MainActivity extends Activity {
 	
 	private ResultsViewAdapter listAdapter;
 	private ResultsViewAdapter gridAdapter;
-	private ArrayList<InfoPackage> listPackages;
+	private ArrayList<InfoLaunchApplication> listPackages;
 	private Object blockRefreshRequire;
 	
 	private ListView listItems;
@@ -103,7 +104,7 @@ public class MainActivity extends Activity {
         
         this.refreshSettings();
         
-        listPackages=new ArrayList<InfoPackage>();
+        listPackages=new ArrayList<InfoLaunchApplication>();
         blockRefreshRequire=new Object();
      
         
@@ -232,11 +233,11 @@ public class MainActivity extends Activity {
 			this.launchApp(listAdapter.getItem(0));
 	}
 	
-	protected void launchApp(ResolveInfo packageName) {
+	protected void launchApp(InfoLaunchApplication app) {
 		//Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName.resolvePackageName);
 		//if (mIntent != null) {
 		Intent mIntent=new Intent();
-		ComponentName name = new ComponentName(packageName.activityInfo.packageName, packageName.activityInfo.name);
+		ComponentName name = new ComponentName(app.getPackageName(), app.getActivity());
 		mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 		mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		mIntent.setComponent(name);
@@ -276,18 +277,18 @@ public class MainActivity extends Activity {
 		return listAdapter;
 	}//*/
 
-	public void setContentListAdapter(ArrayList<ResolveInfo> data) {
+	public void setContentListAdapter(ArrayList<InfoLaunchApplication> data) {
 		synchronized (this) {
 			this.listAdapter.setData(data);
 			this.gridAdapter.setData(data);
 		}
 	}
 
-	public ArrayList<InfoPackage> getListPackages() {
+	public ArrayList<InfoLaunchApplication> getListPackages() {
 		return listPackages;
 	}
 
-	public void setListPackages(ArrayList<InfoPackage> listPackages) {
+	public void setListPackages(ArrayList<InfoLaunchApplication> listPackages) {
 		this.listPackages = listPackages;
 		this.setRequireRefresh();
 	}

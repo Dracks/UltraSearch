@@ -2,10 +2,10 @@ package es.jaumesingla.ultrasearch.threads;
 
 import java.util.ArrayList;
 
-import android.content.pm.ResolveInfo;
+import android.content.pm.PackageManager;
 
+import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.MainActivity;
-import es.jaumesingla.ultrasearch.search.InfoPackage;
 
 public class RefreshList implements Runnable {
 	private MainActivity dependence;
@@ -15,8 +15,8 @@ public class RefreshList implements Runnable {
 	}
 	
 	public class sendRefresh implements Runnable{
-		ArrayList<ResolveInfo> newData;
-		public sendRefresh(ArrayList<ResolveInfo> nData){
+		ArrayList<InfoLaunchApplication> newData;
+		public sendRefresh(ArrayList<InfoLaunchApplication> nData){
 			newData=nData;
 		}
 		@Override
@@ -29,17 +29,18 @@ public class RefreshList implements Runnable {
 	public void run() {
 		dependence.refreshOnProgress();
 		//ResultsViewAdapter newAdapter=new ResultsViewAdapter(dependence.getLayoutInflater(), dependence.getPackageManager());
-		ArrayList<ResolveInfo> newData=new ArrayList<ResolveInfo>();
-		ArrayList<InfoPackage> listPrograms=null;
+		ArrayList<InfoLaunchApplication> newData=new ArrayList<InfoLaunchApplication>();
+		ArrayList<InfoLaunchApplication> listPrograms=null;
 		String filter=null;
 		synchronized (dependence) {
 			listPrograms=dependence.getListPackages();
 			filter=dependence.getFilter();
 		}
+		PackageManager pm=dependence.getPackageManager();
 		
-		for (InfoPackage ip: listPrograms){
+		for (InfoLaunchApplication ip: listPrograms){
 			if (ip.contains(filter)){
-				newData.add(ip.getData());
+				newData.add(ip);
 			}
 		}
 		

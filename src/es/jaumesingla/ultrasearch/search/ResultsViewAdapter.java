@@ -3,12 +3,15 @@ package es.jaumesingla.ultrasearch.search;
 import java.util.ArrayList;
 
 import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.Settings;
 import android.util.Log;
@@ -31,7 +34,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 
 	protected static final String TAG = "ResultsViewAdapter";
 
-	private ArrayList<ResolveInfo> listContents;
+	private ArrayList<InfoLaunchApplication> listContents;
 	private LayoutInflater mInflater;
 	private Context mContext;
 	private int layoutId;
@@ -39,17 +42,17 @@ public class ResultsViewAdapter extends BaseAdapter {
 	public ResultsViewAdapter(LayoutInflater inf, Context c, int layoutId){
 		super();
 		mInflater=inf;
-		listContents=new ArrayList<ResolveInfo>();
+		listContents=new ArrayList<InfoLaunchApplication>();
 		mContext=c;
 		this.layoutId=layoutId;
 	}
 	
-	public void add(ResolveInfo e){
+	public void add(InfoLaunchApplication e){
 		listContents.add(e);
 		notifyDataSetChanged();
 	}
 	
-	public void setData(ArrayList<ResolveInfo> data){
+	public void setData(ArrayList<InfoLaunchApplication> data){
 		listContents=data;
 		notifyDataSetChanged();
 	}
@@ -60,7 +63,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public ResolveInfo getItem(int position) {
+	public InfoLaunchApplication getItem(int position) {
 		return listContents.get(position);
 	}
 
@@ -90,10 +93,18 @@ public class ResultsViewAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder)convertView.getTag();
 		}
-		ResolveInfo toShow=this.getItem(position);
+		InfoLaunchApplication toShow=this.getItem(position);
 		PackageManager pm=mContext.getPackageManager();
-		holder.textView.setText(toShow.loadLabel(pm));
-		holder.imageView.setImageDrawable(toShow.loadIcon(pm));
+		Drawable icon=mContext.getResources().getDrawable(R.drawable.ic_launcher);
+		try{
+			icon=pm.getResourcesForApplication(toShow.getPackageName()).getDrawable(toShow.getIcon());
+		} catch (Exception e){
+			e.printStackTrace();
+			this.listContents.remove(position);
+			this.notifyDataSetChanged();
+		}
+		holder.textView.setText(toShow.getName());
+		holder.imageView.setImageDrawable(icon);
 		holder.infoView.setOnClickListener(new OnClickListener() {
 			int e=position;
 			@Override
@@ -121,7 +132,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 	}
 	
 	public void viewInfo(int element){
-		String mCurrentPkgName=this.getItem(element).activityInfo.packageName;
+		String mCurrentPkgName=this.getItem(element).getPackageName();
 		 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package", mCurrentPkgName, null));
 		 // start new activity to display extended information
 		 mContext.startActivity(intent);
