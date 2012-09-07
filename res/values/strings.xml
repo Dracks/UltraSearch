@@ -8,5 +8,9 @@
     <string name="shareTextTitle">Fast Search and Launch Applications</string>
     <string name="shareText">Fast search and launch applications with the %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
     <string name="shareTitle">Share with your friends</string>
+    <string-array name="app_options">
+        <item >Information</item>
+        <item >Share</item>
+    </string-array>
 
 </resources>

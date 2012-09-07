@@ -6,8 +6,8 @@
 	 >
     <ImageView
         android:id="@+id/imgIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dip"
+        android:layout_height="70dip"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:paddingLeft="10dip"
@@ -37,12 +37,12 @@
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <Button
-        android:id="@+id/btInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/imgIcon"
-        android:background="@android:drawable/ic_menu_add" />
+	<Spinner
+	    android:id="@+id/spOptions"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/txtName"
+	    android:layout_alignParentRight="true"
+	     />
 
 </RelativeLayout>

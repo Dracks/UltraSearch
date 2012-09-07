@@ -24,12 +24,17 @@
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
+    <!-- <Button
         android:id="@+id/btInfo"
         android:layout_width="20dip"
         android:layout_height="20dip"
         android:text="" 
         android:padding="10dip"
-        android:background="@android:drawable/ic_dialog_info"/>
+        android:background="@android:drawable/ic_dialog_info"/> -->
+    <Spinner
+	    android:id="@+id/spOptions"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	     />
 
 </LinearLayout>
