@@ -3,6 +3,7 @@ package es.jaumesingla.ultrasearch.search;
 import java.util.ArrayList;
 
 import es.jaumesingla.ultrasearch.Constants;
+import es.jaumesingla.ultrasearch.Constants.ListMode;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.UltraSearchApp.DataBaseChanged;
@@ -13,6 +14,7 @@ import es.jaumesingla.ultrasearch.views.ExpandableGridView;
 
 import junit.framework.Assert;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +48,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -56,8 +59,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	
 	
 	private final String TAG="MainActivity";
-	
-	public enum ListMode{LIST, GRID};
 
     //@SuppressLint("NewApi")
 	
@@ -80,6 +81,10 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	private ListMode listMode;
 	
 	private View cellGrid;
+
+	private LinearLayout searchBar;
+
+	private TextView searchText;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -186,20 +191,15 @@ public class MainActivity extends Activity implements DataBaseChanged{
 				}
 			}
 		});
-        
-        /*ImageButton shareButton=(ImageButton) findViewById(R.id.shareButton);
-        shareButton.setOnClickListener(new OnClickListener() {
-			
+        searchBar= (LinearLayout) findViewById(R.id.llSearchBar);
+        searchText= (TextView) findViewById(R.id.txtSearch);
+        searchBar.setVisibility(View.GONE);
+        searchBar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent share=new Intent(Intent.ACTION_SEND);
-				share.setType("text/plain");
-				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
-				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
-				
-				startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+				launchMarket();
 			}
-		});*/
+		});
         
     }
 	
@@ -277,6 +277,12 @@ public class MainActivity extends Activity implements DataBaseChanged{
 		}
 	}
 	
+	protected void launchMarket(){
+		Intent share=new Intent(Intent.ACTION_VIEW);
+    	share.setData(Uri.parse("market://search?q="+filter));
+    	startActivity(Intent.createChooser(share, "-- Search in market"));
+	}
+	
 	
 
     @Override
@@ -288,6 +294,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+    	Intent share;
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -297,12 +304,21 @@ public class MainActivity extends Activity implements DataBaseChanged{
             	startActivity(settings);
             	return true;
             case R.id.menu_share:
-            	Intent share=new Intent(Intent.ACTION_SEND);
+            	share=new Intent(Intent.ACTION_SEND);
 				share.setType("text/plain");
 				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
 				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
 				
 				startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+            	return true;
+            case R.id.menu_contact:
+            	share=new Intent(Intent.ACTION_SENDTO);
+            	share.setData(Uri.parse("mailto:mail@jaumesingla.es"));
+            	share.putExtra(Intent.EXTRA_SUBJECT, "[UltraSearchApp]");
+            	startActivity(share);
+            	return true;
+            case R.id.menu_about:
+            	/**/
             	return true;
         }
         return super.onOptionsItemSelected(item);
@@ -316,6 +332,12 @@ public class MainActivity extends Activity implements DataBaseChanged{
 
 	public void setContentListAdapter(ArrayList<InfoLaunchApplication> data) {
 		synchronized (this) {
+			if (data.size()>0){
+				searchBar.setVisibility(View.GONE);
+			} else {
+				searchBar.setVisibility(View.VISIBLE);
+				searchText.setText(getResources().getString(R.string.search_in_market, filter));
+			}
 			this.listAdapter.setData(data);
 			this.gridAdapter.setData(data);
 		}

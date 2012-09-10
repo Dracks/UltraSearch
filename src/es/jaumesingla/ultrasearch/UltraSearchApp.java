@@ -24,6 +24,7 @@ public class UltraSearchApp extends Application {
 	private DataBaseInterface dbi;
 	
 	private ArrayList<DataBaseChanged> listNotifications;
+	private SharedPreferences preferences;
 	
 	public static UltraSearchApp getInstance(){
 		return instance;
@@ -38,15 +39,20 @@ public class UltraSearchApp extends Application {
 		dbi.open();
 		this.launchRefreshDataBase();
 		listNotifications=new ArrayList<DataBaseChanged>();
+		preferences=getSharedPreferences(preferenceName, 0);
+		
+		if (preferences.getInt(Constants.Preferences.VERSION_KEY, Constants.Preferences.VERSION)!=Constants.Preferences.VERSION){
+			this.upgradeConfiguration(preferences.getInt(Constants.Preferences.VERSION_KEY, Constants.Preferences.VERSION));
+		}
 	}
-	
+
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
 	}
 	
 	public SharedPreferences getPreferences(){
-		return getSharedPreferences(preferenceName, 0);
+		return preferences;
 	}
 	
 	public DataBaseInterface getDataBase(){
@@ -81,4 +87,7 @@ public class UltraSearchApp extends Application {
 		this.onDataBaseChanged();
 	}
 
+	private void upgradeConfiguration(int version) {
+		
+	}
 }

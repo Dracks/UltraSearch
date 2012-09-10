@@ -33,7 +33,8 @@
         </activity>
         <activity
             android:name=".settings.SettingsActivity" 
-            android:label="@string/menu_settings">
+            android:label="@string/menu_settings"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
         </activity>
     </application>
 </manifest>

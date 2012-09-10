@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.viewlisteners.ShowOptions;
+import es.jaumesingla.ultrasearch.search.viewlisteners.ShowOptionsPosition;
 
 
 import android.content.Context;
@@ -44,10 +45,12 @@ public class ResultsViewAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private Context mContext;
 	private int layoutId;
+	private int selected;
 	
 	public ResultsViewAdapter(LayoutInflater inf, Context c, int layoutId){
 		super();
 		mInflater=inf;
+		selected=-1;
 		listContents=new ArrayList<InfoLaunchApplication>();
 		mContext=c;
 		this.layoutId=layoutId;
@@ -117,10 +120,13 @@ public class ResultsViewAdapter extends BaseAdapter {
 		}
 		holder.textView.setText(toShow.getName());
 		holder.imageView.setImageDrawable(icon);
+		if (selected!=position){
+			holder.optionsView.setVisibility(View.GONE);
+		} else {
+			holder.optionsView.setVisibility(View.VISIBLE);
+		}
 		
-		holder.optionsView.setVisibility(View.GONE);
-		
-		holder.showInfoButton.setOnClickListener(new ShowOptions(holder));
+		holder.showInfoButton.setOnClickListener(new ShowOptionsPosition(this, position));
 		//holder.closeButton.setOnClickListener(new HiddenOptions(holder));
 		
 		return convertView;
@@ -135,6 +141,15 @@ public class ResultsViewAdapter extends BaseAdapter {
 		 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package", mCurrentPkgName, null));
 		 // start new activity to display extended information
 		 mContext.startActivity(intent);
+	}
+	
+	public void setSelectedItem(int i){
+		Log.d(TAG, "setSelectedItem:"+i+" / "+this.selected);
+		if (this.selected!=i){
+			this.selected=i;
+		} else {
+			this.selected=-1;
+		}
 	}
 
 }

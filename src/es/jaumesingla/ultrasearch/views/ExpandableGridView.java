@@ -1,5 +1,6 @@
 package es.jaumesingla.ultrasearch.views;
 
+import es.jaumesingla.ultrasearch.search.ResultsViewAdapter;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class ExpandableGridView extends GridView {
     {
         super(context, attrs, defStyle);
     }
-
+/*
     public boolean isExpanded()
     {
         return expanded;
@@ -56,4 +57,5 @@ public class ExpandableGridView extends GridView {
     {
         this.expanded = expanded;
     }
+ */
 }

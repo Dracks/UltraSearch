@@ -8,9 +8,14 @@
     <string name="shareTextTitle">Fast Search and Launch Applications</string>
     <string name="shareText">Fast search and launch applications with the %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
     <string name="shareTitle">Share with your friends</string>
-    <string-array name="app_options">
-        <item >Information</item>
-        <item >Share</item>
+    <string-array name="service_update">
+        <item >Daily</item>
+        <item >Every two days</item>
+        <item >Weekly</item>
+        <item >Monthly</item>
+        <item >Never</item>
     </string-array>
+	<string name="contact">Contact</string>
+	<string name="search_in_market">Search <i>%1$s</i> in Google Play</string>
 
 </resources>
