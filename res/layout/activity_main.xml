@@ -30,17 +30,6 @@
             android:imeOptions="flagNoFullscreen|actionGo"
             style="@style/AppTheme.TopMenu"/>
 
-        <ImageButton
-            android:id="@+id/shareButton"
-            android:contentDescription="@string/share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="#222"
-            android:padding="5dp"
-            android:src="@android:drawable/ic_menu_share" 
-            />
-
     </LinearLayout>
     
     <ListView
@@ -57,5 +46,13 @@
         android:layout_height="wrap_content"
         android:numColumns="auto_fit">
     </GridView>
+    <!-- 
+     <es.jaumesingla.ultrasearch.views.ExpandableGridView
+        android:id="@+id/resultSearchGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="auto_fit">
+    </es.jaumesingla.ultrasearch.views.ExpandableGridView>
+    -->
 
 </LinearLayout>

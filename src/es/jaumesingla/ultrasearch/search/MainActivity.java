@@ -9,6 +9,7 @@ import es.jaumesingla.ultrasearch.UltraSearchApp.DataBaseChanged;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.settings.SettingsActivity;
 import es.jaumesingla.ultrasearch.threads.RefreshList;
+import es.jaumesingla.ultrasearch.views.ExpandableGridView;
 
 import junit.framework.Assert;
 
@@ -37,10 +38,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -96,7 +99,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
         
         LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
-        cellGrid=inflater.inflate(R.layout.cell_grid, null);
+        cellGrid=inflater.inflate(R.layout.cell_program_grid, null);
         
         
         this.refreshSettings();
@@ -107,8 +110,9 @@ public class MainActivity extends Activity implements DataBaseChanged{
         
         handlerView=new Handler();
         
-        listAdapter=new ResultsViewAdapter(inflater,  this, R.layout.cell_value);
-        gridAdapter=new ResultsViewAdapter(inflater,  this, R.layout.cell_grid);
+        listAdapter=new ResultsViewAdapter(inflater,  this, R.layout.cell_program_list);
+        gridAdapter=new ResultsViewAdapter(inflater,  this, R.layout.cell_program_grid);
+        
         
         OnItemClickListener launchItemClick = new OnItemClickListener() {
 
@@ -126,7 +130,10 @@ public class MainActivity extends Activity implements DataBaseChanged{
         listItems.setOnItemClickListener(launchItemClick);
         
         gridItems=(GridView) findViewById(R.id.resultSearchGrid);
+        //((ExpandableGridView) gridItems).setExpanded(true);
         gridItems.setAdapter(gridAdapter);
+        
+        gridItems.setColumnWidth(measureCellWidth(this, cellGrid));
         
         gridItems.setOnItemClickListener(launchItemClick);
         
@@ -180,7 +187,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 			}
 		});
         
-        ImageButton shareButton=(ImageButton) findViewById(R.id.shareButton);
+        /*ImageButton shareButton=(ImageButton) findViewById(R.id.shareButton);
         shareButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -192,9 +199,10 @@ public class MainActivity extends Activity implements DataBaseChanged{
 				
 				startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
 			}
-		});
+		});*/
         
     }
+	
 	
 	@Override
 	protected void onResume() {
@@ -223,6 +231,23 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	protected void onStop() {
 		super.onStop();
 		UltraSearchApp.getInstance().unregisterOnDataBaseChanged(this);
+	}
+	
+	public int measureCellWidth( Context context, View cell )
+	{
+	    // We need a fake parent
+	    FrameLayout buffer = new FrameLayout( context );
+	    android.widget.AbsListView.LayoutParams layoutParams = new  android.widget.AbsListView.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+	    buffer.addView( cell, layoutParams);
+
+	    cell.forceLayout();
+	    cell.measure(1000, 1000);
+
+	    int width = cell.getMeasuredWidth();
+
+	    buffer.removeAllViews();
+
+	    return width;
 	}
 	
 	private void refreshSettings(){
@@ -270,6 +295,15 @@ public class MainActivity extends Activity implements DataBaseChanged{
             case R.id.menu_settings:
             	Intent settings=new Intent(this, SettingsActivity.class);
             	startActivity(settings);
+            	return true;
+            case R.id.menu_share:
+            	Intent share=new Intent(Intent.ACTION_SEND);
+				share.setType("text/plain");
+				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
+				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
+				
+				startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+            	return true;
         }
         return super.onOptionsItemSelected(item);
     }

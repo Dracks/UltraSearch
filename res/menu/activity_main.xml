@@ -5,4 +5,5 @@
         android:showAsAction="never" />
     <item android:id="@+id/menu_contact"></item>
     <item android:id="@+id/menu_about"></item>
+    <item android:id="@+id/menu_share" android:title="@string/share"></item>
 </menu>

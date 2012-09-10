@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.util.Log;
 //import android.util.Log;
 
 import es.jaumesingla.ultrasearch.UltraSearchApp;
@@ -16,7 +17,7 @@ import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.MainActivity;
 
 public class ChargeInfo implements Runnable {
-//	private static final String TAG = "ChargeInfo";
+	private static final String TAG = "ChargeInfo";
 	private ArrayList<InfoLaunchApplication> listPackages;
 	//private MainActivity dependences;
 	private PackageManager pm;
@@ -48,9 +49,11 @@ public class ChargeInfo implements Runnable {
 			String activity=rinfo.activityInfo.name;
 			
 			int ic=rinfo.activityInfo.icon;
-			if (ic==0)
+			if (ic==0){
 				ic=rinfo.activityInfo.applicationInfo.icon;
-			Assert.assertTrue(ic!=0);
+				if (ic==0)
+					ic=android.R.drawable.sym_def_app_icon;
+			}
 			
 			listPackages.add(new InfoLaunchApplication(name, ic,activity, packageName, description));
 		}
