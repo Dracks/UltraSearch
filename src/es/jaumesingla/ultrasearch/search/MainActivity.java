@@ -203,11 +203,13 @@ public class MainActivity extends Activity implements DataBaseChanged{
 		if (listMode==ListMode.GRID){
         	listItems.setVisibility(View.GONE);
         	gridItems.setVisibility(View.VISIBLE);
+        	gridAdapter.notifyDataSetChanged();
         	//if (gridItems.getWidth()>0)
         	this.gridAdapter.setNumColums(-1);
         } else {
         	gridItems.setVisibility(View.GONE);
         	listItems.setVisibility(View.VISIBLE);
+        	listAdapter.notifyDataSetChanged();
         }
 	}
 
@@ -343,6 +345,11 @@ public class MainActivity extends Activity implements DataBaseChanged{
 			}
 			this.listAdapter.setData(data);
 			this.gridAdapter.setData(data);
+			if (listMode==ListMode.LIST)
+				this.listAdapter.notifyDataSetChanged();
+			else
+				this.gridAdapter.notifyDataSetChanged();
+			
 			this.listAdapter.clear();
 			this.gridAdapter.clear();
 		}
@@ -425,6 +432,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 
 
 	public void setNumColumns() {
+		Log.d(TAG, "setNumColumns"+gridItems.getWidth()+" / "+cellWidth);
 		this.gridAdapter.setNumColums(gridItems.getWidth()/cellWidth);
 	}
 }

@@ -4,8 +4,7 @@
     <style name="AppTheme" parent="android:style/Theme.Light.NoTitleBar">
     </style>
     <style name="AppTheme.TopMenu"></style>
-    <style name="AppTheme.Dialog" parent="android:style/Theme.DeviceDefault.Dialog"></style>
+    <style name="AppTheme.Dialog" parent="android:style/Theme.Dialog"></style>
     <style name="AppTheme.Dialog.ListItem"></style>
     
-
 </resources>

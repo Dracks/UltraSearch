@@ -57,14 +57,14 @@ public class ResultsViewAdapter extends BaseAdapter {
 		this.numColums=1;
 	}
 	
-	public void add(InfoLaunchApplication e){
+	/*public void add(InfoLaunchApplication e){
 		listContents.add(e);
 		notifyDataSetChanged();
-	}
+	}//*/
 	
 	public void setData(ArrayList<InfoLaunchApplication> data){
 		listContents=data;
-		notifyDataSetChanged();
+		//notifyDataSetChanged();
 	}
 	
 	public void setNumColums(int c){
@@ -159,6 +159,9 @@ public class ResultsViewAdapter extends BaseAdapter {
 	
 	public void setSelectedItem(int i){
 		Log.d(TAG, "setSelectedItem:"+i+" / "+this.selected+ " / "+this.numColums);
+		if (this.numColums==0){
+			((MainActivity) mContext).setNumColumns();
+		}
 		if (this.selected!=i){
 			this.selected=i;
 			this.endSelected=((this.selected/this.numColums)+1)*this.numColums;
