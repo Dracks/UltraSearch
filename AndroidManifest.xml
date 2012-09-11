@@ -9,6 +9,7 @@
         android:targetSdkVersion="15" />
     
      <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -34,7 +35,20 @@
         <activity
             android:name=".settings.SettingsActivity" 
             android:label="@string/menu_settings"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
+            android:theme="@style/AppTheme.Dialog">
         </activity>
+        <activity
+            android:name=".about.AboutActivity" 
+            android:label="@string/about"
+            android:theme="@style/AppTheme.Dialog">
+        </activity>
+        
+        <receiver android:name=".service.ProgramDatabaseReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".service.DatabaseUpdateReceiver" >
+        </receiver>
     </application>
 </manifest>

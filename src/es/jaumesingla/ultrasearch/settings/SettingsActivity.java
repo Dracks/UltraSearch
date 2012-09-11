@@ -1,6 +1,7 @@
 package es.jaumesingla.ultrasearch.settings;
 
 import junit.framework.Assert;
+
 import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.Constants.ListServiceUpdate;
 import es.jaumesingla.ultrasearch.R;
@@ -12,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -19,8 +21,9 @@ public class SettingsActivity extends Activity {
 	
 	private RadioButton radioGrid;
 	private RadioButton radioList;
-	
 	private Spinner spinnerUpdateService;
+	private CheckBox updateOnStart;
+	
 	private ListServiceUpdate[] listServiceUpdateValues=ListServiceUpdate.values();
 	
 	@Override
@@ -31,6 +34,7 @@ public class SettingsActivity extends Activity {
 		radioGrid=(RadioButton) findViewById(R.id.rdGrid);
 		radioList=(RadioButton) findViewById(R.id.rdList);
 		spinnerUpdateService=(Spinner) findViewById(R.id.spUpdateService);
+		updateOnStart=(CheckBox) findViewById(R.id.chbUpdateOnStart);
 		
 		SharedPreferences settings = UltraSearchApp.getInstance().getPreferences();
 		
@@ -55,6 +59,8 @@ public class SettingsActivity extends Activity {
 		
 		spinnerUpdateService.setSelection(getServiceUpdateIndex(option));
 		
+		updateOnStart.setChecked(settings.getBoolean(Constants.Preferences.UPDATE_DB_ON_START, false));
+		
 		
 	}
 	
@@ -73,8 +79,15 @@ public class SettingsActivity extends Activity {
 			
 		editablePreferences.putString(Constants.Preferences.LIST_MODE_KEY, listConfig.toString());
 		editablePreferences.putString(Constants.Preferences.UPDATE_SERVICE_KEY, listServiceUpdateValues[spinnerUpdateService.getSelectedItemPosition()].toString());
+		editablePreferences.putBoolean(Constants.Preferences.UPDATE_DB_ON_START, updateOnStart.isChecked());
 		
 		editablePreferences.commit();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		UltraSearchApp.getInstance().launchAutoUpdate(1);
 	}
 	
 	private int getServiceUpdateIndex(ListServiceUpdate elem){
@@ -89,3 +102,4 @@ public class SettingsActivity extends Activity {
 	}
 
 }
+//*/

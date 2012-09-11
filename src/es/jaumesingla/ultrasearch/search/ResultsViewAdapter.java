@@ -4,20 +4,17 @@ import java.util.ArrayList;
 
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
-import es.jaumesingla.ultrasearch.search.viewlisteners.ShowOptions;
+import es.jaumesingla.ultrasearch.search.viewlisteners.InfoApplication;
+import es.jaumesingla.ultrasearch.search.viewlisteners.ShareApplication;
 import es.jaumesingla.ultrasearch.search.viewlisteners.ShowOptionsPosition;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -35,7 +32,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 		
 		public ImageButton shareButton;
 		public ImageButton infoButton;
-		public ImageButton closeButton;
+		//public ImageButton closeButton;
 		//public Spinner moreView;
 	}
 
@@ -46,14 +43,18 @@ public class ResultsViewAdapter extends BaseAdapter {
 	private Context mContext;
 	private int layoutId;
 	private int selected;
+	private int endSelected;
+	private int numColums;
 	
 	public ResultsViewAdapter(LayoutInflater inf, Context c, int layoutId){
 		super();
 		mInflater=inf;
 		selected=-1;
+		endSelected=-1;
 		listContents=new ArrayList<InfoLaunchApplication>();
 		mContext=c;
 		this.layoutId=layoutId;
+		this.numColums=1;
 	}
 	
 	public void add(InfoLaunchApplication e){
@@ -64,6 +65,11 @@ public class ResultsViewAdapter extends BaseAdapter {
 	public void setData(ArrayList<InfoLaunchApplication> data){
 		listContents=data;
 		notifyDataSetChanged();
+	}
+	
+	public void setNumColums(int c){
+		//Assert.assertTrue(c>0);
+		this.numColums=c;
 	}
 	
 	@Override
@@ -83,7 +89,9 @@ public class ResultsViewAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-
+		if (this.numColums<0){
+			((MainActivity) mContext).setNumColumns();
+		}
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = mInflater.inflate(layoutId, null);
@@ -91,12 +99,12 @@ public class ResultsViewAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.textView = (TextView)convertView.findViewById(R.id.txtName);
 			holder.imageView = (ImageView)convertView.findViewById(R.id.imgIcon);
-			holder.showInfoButton = (ImageButton) convertView.findViewById(R.id.imbInfo);
+			holder.showInfoButton = (ImageButton) convertView.findViewById(R.id.imbShowInfo);
 			holder.optionsView = (LinearLayout) convertView.findViewById(R.id.llOptions);
 			
 			holder.shareButton=(ImageButton) convertView.findViewById(R.id.imbShare);
 			holder.infoButton=(ImageButton) convertView.findViewById(R.id.imbInfo);
-			holder.closeButton=(ImageButton) convertView.findViewById(R.id.imbClose);
+			//holder.closeButton=(ImageButton) convertView.findViewById(R.id.imbClose);
 			
 			//holder.labelPos = (TextView)convertView.findViewById(R.id.labelText);
 			convertView.setTag(holder);
@@ -104,6 +112,12 @@ public class ResultsViewAdapter extends BaseAdapter {
 			
 			holder.showInfoButton.setFocusable(false);
 			holder.showInfoButton.setFocusableInTouchMode(false);
+			
+			holder.shareButton.setFocusable(false);
+			holder.shareButton.setFocusableInTouchMode(false);
+			
+			holder.infoButton.setFocusable(false);
+			holder.infoButton.setFocusableInTouchMode(false);
 			
 		} else {
 			holder = (ViewHolder)convertView.getTag();
@@ -120,36 +134,39 @@ public class ResultsViewAdapter extends BaseAdapter {
 		}
 		holder.textView.setText(toShow.getName());
 		holder.imageView.setImageDrawable(icon);
-		if (selected!=position){
-			holder.optionsView.setVisibility(View.GONE);
-		} else {
-			holder.optionsView.setVisibility(View.VISIBLE);
-		}
 		
 		holder.showInfoButton.setOnClickListener(new ShowOptionsPosition(this, position));
-		//holder.closeButton.setOnClickListener(new HiddenOptions(holder));
+		
+		if (selected>position || endSelected<=position){
+			holder.optionsView.setVisibility(View.GONE);
+		} else if (position>selected && position<endSelected){
+			holder.optionsView.setVisibility(View.INVISIBLE);
+		} else {
+			holder.optionsView.setVisibility(View.VISIBLE);
+
+			holder.shareButton.setOnClickListener(new ShareApplication(mContext, toShow));
+			holder.infoButton.setOnClickListener(new InfoApplication(mContext, toShow));
+		}
 		
 		return convertView;
 	}
 	
 	public void clear(){
-		listContents.clear();
-	}
-	
-	public void viewInfo(int element){
-		String mCurrentPkgName=this.getItem(element).getPackageName();
-		 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package", mCurrentPkgName, null));
-		 // start new activity to display extended information
-		 mContext.startActivity(intent);
+		//this.listContents.clear();
+		this.selected=-1;
+		this.endSelected=-1;
 	}
 	
 	public void setSelectedItem(int i){
-		Log.d(TAG, "setSelectedItem:"+i+" / "+this.selected);
+		Log.d(TAG, "setSelectedItem:"+i+" / "+this.selected+ " / "+this.numColums);
 		if (this.selected!=i){
 			this.selected=i;
+			this.endSelected=((this.selected/this.numColums)+1)*this.numColums;
 		} else {
 			this.selected=-1;
+			this.endSelected=-1;
 		}
+		Log.d(TAG, "endSelected:"+this.endSelected);
 	}
 
 }

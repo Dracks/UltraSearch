@@ -16,6 +16,15 @@
         <item >Never</item>
     </string-array>
 	<string name="contact">Contact</string>
+	<string name="about">About</string>
 	<string name="search_in_market">Search <i>%1$s</i> in Google Play</string>
+	<string name="resultsList">List results mode</string>
+	<string name="resultsListDescription">Show the search results in a list, or using buttons optimizing the screen widht</string>
+	<string name="resultsList_Grid">Grid buttons</string>
+	<string name="resultsList_List">List</string>
+	<string name="updateDatabase">Update database</string>
+	<string name="updateDatabaseDescription">The period time you wish the list applications database wish be refresh</string>
+	<string name="loadOnStart">Refresh on start</string>
+	<string name="loadOnStartDescription">Update the database when the application start, don\'t enable if you has selected some update period time.</string>
 
 </resources>

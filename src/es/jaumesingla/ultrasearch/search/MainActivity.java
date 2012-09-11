@@ -7,10 +7,10 @@ import es.jaumesingla.ultrasearch.Constants.ListMode;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.UltraSearchApp.DataBaseChanged;
+import es.jaumesingla.ultrasearch.about.AboutActivity;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.settings.SettingsActivity;
 import es.jaumesingla.ultrasearch.threads.RefreshList;
-import es.jaumesingla.ultrasearch.views.ExpandableGridView;
 
 import junit.framework.Assert;
 
@@ -47,7 +47,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -80,15 +79,18 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	
 	private ListMode listMode;
 	
-	private View cellGrid;
 
 	private LinearLayout searchBar;
 
 	private TextView searchText;
+
+	private int cellWidth;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        
         setContentView(R.layout.activity_main);
         ViewGroup actionBar=(ViewGroup) findViewById(R.id.llActionBar);
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB){
@@ -101,10 +103,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
         	
        // }
         actionBar.setVisibility(View.VISIBLE);
-        
-        LayoutInflater inflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
-        cellGrid=inflater.inflate(R.layout.cell_program_grid, null);
         
         
         this.refreshSettings();
@@ -138,17 +136,13 @@ public class MainActivity extends Activity implements DataBaseChanged{
         //((ExpandableGridView) gridItems).setExpanded(true);
         gridItems.setAdapter(gridAdapter);
         
-        gridItems.setColumnWidth(measureCellWidth(this, cellGrid));
+        View cellGrid = inflater.inflate(R.layout.cell_program_grid, null);
+        cellWidth=measureCellWidth(this, cellGrid);
+        gridItems.setColumnWidth(cellWidth);
         
         gridItems.setOnItemClickListener(launchItemClick);
         
-        if (listMode==ListMode.GRID){
-        	listItems.setVisibility(View.GONE);
-        	gridItems.setVisibility(View.VISIBLE);
-        } else {
-        	gridItems.setVisibility(View.GONE);
-        	listItems.setVisibility(View.VISIBLE);
-        }//*/
+        showListByConfig();
         
         EditText et=(EditText) findViewById(R.id.inputText);
         //et.setSelectAllOnFocus(true);
@@ -204,6 +198,20 @@ public class MainActivity extends Activity implements DataBaseChanged{
     }
 	
 	
+	private void showListByConfig() {
+		//Log.d(TAG, "showListByConfig: "+gridItems.getWidth()+ " vs "+ cellWidth);
+		if (listMode==ListMode.GRID){
+        	listItems.setVisibility(View.GONE);
+        	gridItems.setVisibility(View.VISIBLE);
+        	//if (gridItems.getWidth()>0)
+        	this.gridAdapter.setNumColums(-1);
+        } else {
+        	gridItems.setVisibility(View.GONE);
+        	listItems.setVisibility(View.VISIBLE);
+        }
+	}
+
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -211,13 +219,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 		
 		this.refreshSettings();
 		
-		if (listMode==ListMode.GRID){
-        	listItems.setVisibility(View.GONE);
-        	gridItems.setVisibility(View.VISIBLE);
-        } else {
-        	gridItems.setVisibility(View.GONE);
-        	listItems.setVisibility(View.VISIBLE);
-        }
+		showListByConfig();
 	}
 	
 	@Override
@@ -318,7 +320,8 @@ public class MainActivity extends Activity implements DataBaseChanged{
             	startActivity(share);
             	return true;
             case R.id.menu_about:
-            	/**/
+            	share=new Intent(this, AboutActivity.class);
+            	startActivity(share);
             	return true;
         }
         return super.onOptionsItemSelected(item);
@@ -340,6 +343,8 @@ public class MainActivity extends Activity implements DataBaseChanged{
 			}
 			this.listAdapter.setData(data);
 			this.gridAdapter.setData(data);
+			this.listAdapter.clear();
+			this.gridAdapter.clear();
 		}
 	}
 
@@ -416,5 +421,10 @@ public class MainActivity extends Activity implements DataBaseChanged{
 			}
 		}).execute();
 		
+	}
+
+
+	public void setNumColumns() {
+		this.gridAdapter.setNumColums(gridItems.getWidth()/cellWidth);
 	}
 }
