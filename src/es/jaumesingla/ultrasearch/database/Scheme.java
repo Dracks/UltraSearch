@@ -83,7 +83,7 @@ public class Scheme {
 			return ret;
 		}
 	}
-	
+	/*
 	public static class Documents{
 		public static final String TABLE="Documents";
 		public static final String COLUMN_NAME="name";
@@ -126,6 +126,6 @@ public class Scheme {
 		public static void upgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 			
 		}
-	}
+	}*/
 
 }
