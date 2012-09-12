@@ -25,7 +25,7 @@
 	<string name="updateDatabase">Update database</string>
 	<string name="updateDatabaseDescription">The period time you wish the list applications database wish be refresh</string>
 	<string name="loadOnStart">Refresh on start</string>
-	<string name="loadOnStartDescription">Update the database when the application start, don\'t enable if you has selected some update period time.</string>
+	<string name="loadOnStartDescription">Update database when the application starts, don\'t enable if you have selected some update period time.</string>
 	<string name="programmed">Programmed by:</string>
 	<string name="dessigned">Dessigned by:</string>
 	<string name="thanks">Thanks to:</string>
