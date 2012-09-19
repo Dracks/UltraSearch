@@ -1,0 +1,33 @@
+<resources>
+    
+    <string name="app_name">Quick Apps Search Versió gratuita</string>
+    <string name="menu_settings">Configuració</string>
+    <string name="title_activity_main">Quick Search</string>
+    <string name="app_not_found">No s\'ha trobat l\'aplicació</string>
+    <string name="share">Comparteix l\'aplicació</string>
+    <string name="shareTextTitle">Cerca i executa aplicacions ràpidament</string>
+    <string name="shareText">Cerca i executa aplicacions ràpidament amb l\'aplicació %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
+    <string name="shareTitle">Comparteix amb els teus amics</string>
+    <string-array name="service_update">
+        <item >Diari</item>
+        <item >Cada dos dies</item>
+        <item >Setmanalment</item>
+        <item >Mensualment</item>
+        <item >Mai</item>
+    </string-array>
+	<string name="contact">Contactar</string>
+	<string name="about">Sobre l\'aplicació</string>
+	<string name="search_in_market">Cerca <i>%1$s</i> a Google Play</string>
+	<string name="resultsList">Llistat de resultats</string>
+	<string name="resultsListDescription">Mostrar els resultats en forma de llista o mitjançant botons per optimitzar l\'amplada de la pantalla</string>
+	<string name="resultsList_Grid">Graella de botons</string>
+	<string name="resultsList_List">LListat</string>
+	<string name="updateDatabase">Actualitza base de dades</string>
+	<string name="updateDatabaseDescription">Interval de temps entre actualitzacions de la base de dades d\'aplicacions</string>
+	<string name="loadOnStart">Actualitza a l\'inici</string>
+	<string name="loadOnStartDescription">Actualitza la base de dades al iniciar l\'aplicació. No activar en cas d\'haver seleccionat algun interval d\'actualització.</string>
+	<string name="programmed">Desenvolupat per:</string>
+	<string name="dessigned">Disseny:</string>
+	<string name="thanks">Agraïments:</string>
+
+</resources>

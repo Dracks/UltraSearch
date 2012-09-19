@@ -1,12 +1,33 @@
 <resources>
     
-    <string name="app_name">Quick Apps Search</string>
-    <string name="menu_settings">Ajustes</string>
+    <string name="app_name">Quick Apps Search Free</string>
+    <string name="menu_settings">Preferencias</string>
     <string name="title_activity_main">Quick Search</string>
-    <string name="app_not_found">No se encuentra aplicación</string>
+    <string name="app_not_found">Aplicación desconocida</string>
     <string name="share">Compartir la aplicación</string>
-    <string name="shareTextTitle">Búsqueda rápida y lanzado de aplicaciones</string>
-    <string name="shareText">Búsqueda rápida y lanzado de aplicaciones con la aplicación %1$s \nhttp://play.google.com/store/apps/details?id=%2$s</string>
-    <string name="shareTitle">Comparte con tus amigos</string>
+    <string name="shareTextTitle">Lanzado y búsqueda rápida de aplicaciones.</string>
+    <string name="shareText">Búsqueda rápida y lanzado de aplicaciones con la aplicación %1$s\nhttp://play.google.com/store/apps/details?id=%2$s</string>
+    <string name="shareTitle">Compártela con tus amigos</string>
+    <string-array name="service_update">
+        <item >Diario</item>
+        <item >Cada dos días</item>
+        <item >Semanal</item>
+        <item >Mensual</item>
+        <item >Nunca</item>
+    </string-array>
+	<string name="contact">Contactos</string>
+	<string name="about">Acerca de</string>
+	<string name="search_in_market">Buscar <i>%1$s</i> en Google Play</string>
+	<string name="resultsList">Modo lista de resultados</string>
+	<string name="resultsListDescription">Mostrar los resultados de la búsqueda en una lista o utilizar botones optimizados para el tamaño de la pantalla</string>
+	<string name="resultsList_Grid">Cuadrícula de botones</string>
+	<string name="resultsList_List">Lista</string>
+	<string name="updateDatabase">Actualizar base de datos</string>
+	<string name="updateDatabaseDescription">El periodo de tiempo en el que desea que se refresque la base de datos de aplicaciones</string>
+	<string name="loadOnStart">Refrescar durante el inicio</string>
+	<string name="loadOnStartDescription">Actualizar la base de datos cuando se inicia la aplicación, no disponible cuando tenga seleccionado algún periodo de tiempo.</string>
+	<string name="programmed">Programada por:</string>
+	<string name="dessigned">Diseñada por:</string>
+	<string name="thanks">Gracias a:</string>
 
 </resources>

@@ -1,12 +1,12 @@
 <resources>
-
+    
     <string name="app_name">Quick Apps Search</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Quick Search</string>
     <string name="app_not_found">The application not found</string>
-    <string name="share">Share the application</string>
-    <string name="shareTextTitle">Fast Search and Launch Applications</string>
-    <string name="shareText">Fast search and launch applications with the %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
+    <string name="share">Share application</string>
+    <string name="shareTextTitle">Search and Launch Applications Fast</string>
+    <string name="shareText">Search and launch applications fast with %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
     <string name="shareTitle">Share with your friends</string>
     <string-array name="service_update">
         <item >Daily</item>
@@ -19,15 +19,15 @@
 	<string name="about">About</string>
 	<string name="search_in_market">Search <i>%1$s</i> in Google Play</string>
 	<string name="resultsList">List results mode</string>
-	<string name="resultsListDescription">Show the search results in a list, or using buttons optimizing the screen widht</string>
+	<string name="resultsListDescription">Show search results in a list, or using buttons optimizing screen width</string>
 	<string name="resultsList_Grid">Grid buttons</string>
 	<string name="resultsList_List">List</string>
 	<string name="updateDatabase">Update database</string>
-	<string name="updateDatabaseDescription">The period time you wish the list applications database wish be refresh</string>
+	<string name="updateDatabaseDescription">The preferred interval of time between updates of the application database</string>
 	<string name="loadOnStart">Refresh on start</string>
-	<string name="loadOnStartDescription">Update database when the application starts, don\'t enable if you have selected some update period time.</string>
+	<string name="loadOnStartDescription">Update database when application starts, don\'t enable if you have selected some update interval.</string>
 	<string name="programmed">Programmed by:</string>
-	<string name="dessigned">Dessigned by:</string>
+	<string name="dessigned">Designed by:</string>
 	<string name="thanks">Thanks to:</string>
 
 </resources>
