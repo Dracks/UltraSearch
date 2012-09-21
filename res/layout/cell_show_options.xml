@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llOptions"
+   	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+    android:background="#BBB"
+    android:gravity="center_horizontal"
+    android:paddingTop="5dip"
+    android:paddingBottom="5dip" >
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_weight="1.0"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+	<ImageButton
+	    android:id="@+id/imbShare"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@android:color/transparent"
+	    android:src="@android:drawable/ic_menu_share" />
+	<LinearLayout
+        android:layout_width="0dip"
+        android:layout_weight="1.0"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+	<ImageButton
+	    android:id="@+id/imbInfo"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@android:color/transparent"
+	    android:src="@android:drawable/ic_menu_info_details" />
+	<LinearLayout
+        android:layout_width="0dip"
+        android:layout_weight="1.0"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+	<!-- <ImageButton
+	    android:id="@+id/imbClose"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@android:color/transparent"
+	    android:src="@android:drawable/ic_menu_close_clear_cancel" />
+	<LinearLayout
+        android:layout_width="0dip"
+        android:layout_weight="1.0"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout> -->
+    
+
+</LinearLayout>

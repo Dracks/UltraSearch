@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar" >
     </style>
@@ -9,4 +9,8 @@
      <style name="AppTheme.Dialog" parent="android:style/Theme.DeviceDefault.Light.Dialog"></style>
      <style name="AppTheme.Dialog.Content"/>
      <style name="AppTheme.TextCell" />
+    <style name="AppTheme.Dialog.ListItem">
+        <item name="android:paddingTop">10dip</item>
+    </style>
+
 </resources>

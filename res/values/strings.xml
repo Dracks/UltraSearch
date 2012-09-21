@@ -8,7 +8,28 @@
     <string name="shareTextTitle">Fast Search and Launch Applications</string>
     <string name="shareText">Fast search and launch applications with the %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
     <string name="shareTitle">Share with your friends</string>
-    <string name="thanks">Thanks to share it!</string>
-    <string name="thanksText">Thanks to share this application, for that you recive %1$d days without ads in this application.</string>
+    <string name="shareThanks">Thanks to share it!</string>
+    <string name="shareThanksText">Thanks to share this application, for that you recive %1$d days without ads in this application.</string>
+    <string-array name="service_update">
+        <item >Daily</item>
+        <item >Every two days</item>
+        <item >Weekly</item>
+        <item >Monthly</item>
+        <item >Never</item>
+    </string-array>
+	<string name="contact">Contact</string>
+	<string name="about">About</string>
+	<string name="search_in_market">Search <i>%1$s</i> in Google Play</string>
+	<string name="resultsList">List results mode</string>
+	<string name="resultsListDescription">Show the search results in a list, or using buttons optimizing the screen widht</string>
+	<string name="resultsList_Grid">Grid buttons</string>
+	<string name="resultsList_List">List</string>
+	<string name="updateDatabase">Update database</string>
+	<string name="updateDatabaseDescription">The period time you wish the list applications database wish be refresh</string>
+	<string name="loadOnStart">Refresh on start</string>
+	<string name="loadOnStartDescription">Update database when the application starts, don\'t enable if you have selected some update period time.</string>
+	<string name="programmed">Programmed by:</string>
+	<string name="dessigned">Dessigned by:</string>
+	<string name="thanks">Thanks to:</string>
 
 </resources>

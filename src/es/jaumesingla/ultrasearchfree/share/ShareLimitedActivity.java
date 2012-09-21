@@ -68,7 +68,7 @@ public class ShareLimitedActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
-	        	convertView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.cell_value, null);
+	        	convertView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.cell_share_list, null);
 	        	holder = new ViewHolder();
 	        	holder.icon=(ImageView) convertView.findViewById(R.id.imgIcon);
 				holder.name=(TextView) convertView.findViewById(R.id.txtName);

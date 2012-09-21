@@ -31,16 +31,33 @@
             android:imeOptions="flagNoFullscreen|actionGo"
             style="@style/AppTheme.TopMenu"/>
 
-        <ImageButton
-            android:id="@+id/shareButton"
-            android:contentDescription="@string/share"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="#DDD"
+        android:padding="4dip"
+        android:visibility="gone" 
+        >
+
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="#222"
-            android:padding="5dp"
-            android:src="@android:drawable/ic_menu_share" 
-            />
+            android:src="@drawable/ic_action_search" />
+
+        <TextView
+            android:id="@+id/txtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="4dip"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
     
@@ -53,11 +70,26 @@
                 ads:adUnitId="a1503e57a77434f"/>
     
     <ListView
-        android:id="@+id/resultSearch"
+        android:id="@+id/resultSearchList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
       >
 
     </ListView>
+
+    <!--  <GridView
+        android:id="@+id/resultSearchGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="auto_fit">
+    </GridView> -->
+    
+     <es.jaumesingla.ultrasearch.views.ExpandableGridView
+        android:id="@+id/resultSearchGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="auto_fit">
+    </es.jaumesingla.ultrasearch.views.ExpandableGridView>
+
 
 </LinearLayout>
