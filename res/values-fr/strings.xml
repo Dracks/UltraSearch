@@ -1,0 +1,35 @@
+<resources>
+    
+    <string name="app_name">Quick Apps Search Free</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="title_activity_main">Recherche rapide</string>
+    <string name="app_not_found">L\'application est introuvable</string>
+    <string name="share">Partager l\'application</string>
+    <string name="shareTextTitle">Recherche rapide et Lancement d\'Applications</string>
+    <string name="shareText">Recherche rapide et Lancement d\'Applications avec le %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
+    <string name="shareTitle">Partagez avec vos amis</string>
+    <string name="shareThanks">Merci de l\'avoir partagé!</string>
+    <string name="shareThanksText">Merci d\'avoir partagé cette application, pour cela vous allez reçevoir %1$d jours sans ads sur cette application.</string>
+    <string-array name="service_update">
+        <item >Quotidien</item>
+        <item >Un jour sur deux</item>
+        <item >Hebdomadaire</item>
+        <item >Mensuel</item>
+        <item >Jamais</item>
+    </string-array>
+	<string name="contact">Nous contacter</string>
+	<string name="about">à propos</string>
+	<string name="search_in_market">Recherche <i>%1$s</i> dans Google Play</string>
+	<string name="resultsList">Liste de résultats</string>
+	<string name="resultsListDescription">Montrer les résultats de la recherche dans une liste, ou dans une grille s\'optimisant suivant la largueur de l\'écran</string>
+	<string name="resultsList_Grid">Grille</string>
+	<string name="resultsList_List">Liste</string>
+	<string name="updateDatabase">Mise à jour de la base de données</string>
+	<string name="updateDatabaseDescription">La périodicité d\'actualisation de la base de données de la liste d\'applications que vous désirez</string>
+	<string name="loadOnStart">Actualiser au démarrage</string>
+	<string name="loadOnStartDescription">Mettre à jour la base de données au démarrage de l\'application, ne pas activer si vous avez sélectionné une mise à jour périodique</string>
+	<string name="programmed">Programmé par:</string>
+	<string name="dessigned">Créé par:</string>
+	<string name="thanks">Remerciements:</string>
+
+</resources>
