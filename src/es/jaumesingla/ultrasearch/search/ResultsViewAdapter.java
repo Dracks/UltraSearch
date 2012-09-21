@@ -147,6 +147,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 			holder.shareButton.setOnClickListener(new ShareApplication(mContext, toShow));
 			holder.infoButton.setOnClickListener(new InfoApplication(mContext, toShow));
 		}
+		Log.d(TAG, "draw:"+holder.optionsView.getVisibility());
 		
 		return convertView;
 	}
@@ -170,6 +171,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 			this.endSelected=-1;
 		}
 		Log.d(TAG, "endSelected:"+this.endSelected);
+		//this.notifyDataSetChanged();
 	}
 
 }

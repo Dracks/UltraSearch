@@ -1,135 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dip"
-    android:paddingTop="0dip"
-    android:showDividers="beginning|middle|end" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AppTheme.Dialog.ListItem"
-        >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/rdgOptionsView"
-            android:text="@string/resultsList"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <RadioGroup
-            android:id="@+id/rdgOptionsView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical" >
-
-            <RadioButton
-                android:id="@+id/rdGrid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/resultsList_Grid" />
-
-            <RadioButton
-                android:id="@+id/rdList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/resultsList_List" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
-            android:layout_toLeftOf="@+id/rdgOptionsView"
-            android:text="@string/resultsListDescription"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AppTheme.Dialog.ListItem"
-         >
-
-        <TextView
-            android:id="@+id/txtTitleUpdateService"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/spUpdateService"
-            android:text="@string/updateDatabase"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Spinner
-            android:id="@+id/spUpdateService"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/txtTitleUpdateService"
-            android:layout_toLeftOf="@+id/spUpdateService"
-            android:text="@string/updateDatabaseDescription"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AppTheme.Dialog.ListItem"
-         >
-
-        <TextView
-            android:id="@+id/txtTitleLoadApps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/chbUpdateOnStart"
-            android:text="@string/loadOnStart"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <CheckBox
-            android:id="@+id/chbUpdateOnStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/txtTitleLoadApps"
-            android:layout_toLeftOf="@+id/chbUpdateOnStart"
-            android:text="@string/loadOnStartDescription"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </RelativeLayout>
-
-</LinearLayout>
+    android:layout_height="match_parent"
+    >
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:padding="10dip"
+	    android:paddingTop="0dip"
+	    android:showDividers="beginning|middle|end" >
+	
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/AppTheme.Dialog.ListItem"
+	        >
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_toLeftOf="@+id/rdgOptionsView"
+	            android:text="@string/resultsList"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <RadioGroup
+	            android:id="@+id/rdgOptionsView"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_centerVertical="true"
+	            android:orientation="vertical" >
+	
+	            <RadioButton
+	                android:id="@+id/rdGrid"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/resultsList_Grid" />
+	
+	            <RadioButton
+	                android:id="@+id/rdList"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:checked="true"
+	                android:text="@string/resultsList_List" />
+	        </RadioGroup>
+	
+	        <TextView
+	            android:id="@+id/textView2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@+id/textView1"
+	            android:layout_toLeftOf="@+id/rdgOptionsView"
+	            android:text="@string/resultsListDescription"
+	            android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    </RelativeLayout>
+	
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/AppTheme.Dialog.ListItem"
+	         >
+	
+	        <TextView
+	            android:id="@+id/txtTitleUpdateService"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_toLeftOf="@+id/spUpdateService"
+	            android:text="@string/updateDatabase"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <Spinner
+	            android:id="@+id/spUpdateService"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_centerVertical="true"
+	            android:paddingBottom="10dip"
+	            android:paddingTop="10dip" />
+	
+	        <TextView
+	            android:id="@+id/textView3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@id/txtTitleUpdateService"
+	            android:layout_toLeftOf="@+id/spUpdateService"
+	            android:text="@string/updateDatabaseDescription"
+	            android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    </RelativeLayout>
+	
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        style="@style/AppTheme.Dialog.ListItem"
+	         >
+	
+	        <TextView
+	            android:id="@+id/txtTitleLoadApps"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_toLeftOf="@+id/chbUpdateOnStart"
+	            android:text="@string/loadOnStart"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <CheckBox
+	            android:id="@+id/chbUpdateOnStart"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_centerVertical="true" />
+	
+	        <TextView
+	            android:id="@+id/textView4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@id/txtTitleLoadApps"
+	            android:layout_toLeftOf="@+id/chbUpdateOnStart"
+	            android:text="@string/loadOnStartDescription"
+	            android:textAppearance="?android:attr/textAppearanceSmall" />
+	    </RelativeLayout>
+	</LinearLayout>
+</ScrollView>
