@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Settings">
-    <SwitchPreference android:switchTextOff="View on list" android:summaryOn="Grid" android:switchTextOn="View on Grid" android:summaryOff="List"/>
-    
-
-</PreferenceScreen>

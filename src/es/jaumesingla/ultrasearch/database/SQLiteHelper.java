@@ -21,13 +21,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		Scheme.Applications.create(db);
 		//Scheme.Documents.create(db);
-		//Scheme.Statistics.create(db);
+		Scheme.Statistics.create(db);
 		UltraSearchApp.getInstance().launchRefreshDataBase();
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Scheme.Applications.upgrade(db, oldVersion, newVersion);
+		if (oldVersion==1){
+			Scheme.Statistics.create(db);
+		} else {
+			Scheme.Statistics.upgrade(db, oldVersion, newVersion);
+		}
 		//Scheme.Documents.upgrade(db, oldVersion, newVersion);
 		//Scheme.Statistics.upgrade(db, oldVersion, newVersion);
 	}

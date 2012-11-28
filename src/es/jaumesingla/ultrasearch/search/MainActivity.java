@@ -1,6 +1,7 @@
 package es.jaumesingla.ultrasearch.search;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.Constants.ListMode;
@@ -267,11 +268,8 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	protected void launchApp(InfoLaunchApplication app) {
 		//Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName.resolvePackageName);
 		//if (mIntent != null) {
-		Intent mIntent=new Intent();
-		ComponentName name = new ComponentName(app.getPackageName(), app.getActivity());
-		mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-		mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		mIntent.setComponent(name);
+		UltraSearchApp.getInstance().getDataBase().getStatistics().launchApp(app);
+		Intent mIntent=app.getIntentLaunch();
 		try {
 			startActivity(mIntent);
 		} catch (ActivityNotFoundException err) {
@@ -340,11 +338,14 @@ public class MainActivity extends Activity implements DataBaseChanged{
 			if (data.size()>0){
 				searchBar.setVisibility(View.GONE);
 			} else {
-				searchBar.setVisibility(View.VISIBLE);
-				searchText.setText(getResources().getString(R.string.search_in_market, filter));
+				if (this.listPackages.size()>0){
+					searchBar.setVisibility(View.VISIBLE);
+					searchText.setText(getResources().getString(R.string.search_in_market, filter));
+				}
 			}
 			this.listAdapter.setData(data);
 			this.gridAdapter.setData(data);
+			
 			if (listMode==ListMode.LIST)
 				this.listAdapter.notifyDataSetChanged();
 			else

@@ -93,7 +93,7 @@ public class UltraSearchApp extends Application {
 	
 	public void chargeDataBase(ArrayList<InfoLaunchApplication> appList){
 		Scheme.Applications appInterface=dbi.getApplications();
-		
+		appInterface.clear();
 		for (InfoLaunchApplication app: appList){
 			appInterface.addApplication(app);
 		}
@@ -144,12 +144,8 @@ public class UltraSearchApp extends Application {
         Calendar cal = Calendar.getInstance();
         // Start 120 seconds after boot completed
         cal.add(Calendar.SECOND, triger);
-        //
-        // Fetch every 30 seconds
-        // InexactRepeating allows Android to optimize the energy consumption
         
         
 		service.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), repeat*Constants.Time.DAYS, pending);
-		
 	}
 }

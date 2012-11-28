@@ -43,12 +43,33 @@
             android:theme="@style/AppTheme.Dialog">
         </activity>
         
-        <receiver android:name=".service.ProgramDatabaseReceiver" >
+         <receiver android:name=".service.ProgramDatabaseReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver android:name=".service.DatabaseUpdateReceiver" >
         </receiver>
+        
+        <activity 
+            android:name=".widgets.activities.ListWidgetSettings"
+            android:label="@string/menu_settings"
+            android:theme="@style/AppTheme.Dialog"
+            >
+            <intent-filter>
+		        <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+		    </intent-filter>
+        </activity>
+        <activity android:name=".widgets.activities.LaunchAppActivity"/>
+
+        <receiver android:name=".widgets.ListWidgetProvider" android:label="a-- WidgetSearch">
+		    <intent-filter>
+		        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+		    </intent-filter>
+		    <meta-data android:name="android.appwidget.provider" android:resource="@xml/list_widget" />
+		</receiver>
+		<service android:name=".widgets.ListWidgetService" android:permission="android.permission.BIND_REMOTEVIEWS"></service>
+		
+        
     </application>
 </manifest>
