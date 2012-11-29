@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import es.jaumesingla.ultrasearch.Constants.ListMode;
+import es.jaumesingla.ultrasearch.Constants.ListOrder;
 import es.jaumesingla.ultrasearch.Constants.ListServiceUpdate;
 import es.jaumesingla.ultrasearch.database.DataBaseInterface;
 import es.jaumesingla.ultrasearch.database.Scheme;
@@ -107,12 +108,33 @@ public class UltraSearchApp extends Application {
 		config.putBoolean(Constants.Preferences.UPDATE_DB_ON_START, false);
 		config.putString(Constants.Preferences.LIST_MODE_KEY, ListMode.LIST.toString());
 		config.putString(Constants.Preferences.UPDATE_SERVICE_KEY, ListServiceUpdate.TWO_DAYS.toString());
+		config.putString(Constants.Preferences.LIST_ORDER, ListOrder.ALPHABETIC.toString());
 		config.commit();
 	}
 
 	private void upgradeConfiguration(int version) {
+		Editor config=this.preferences.edit();
+		switch (version){
+		case 1:
+			config.putString(Constants.Preferences.LIST_ORDER, ListOrder.ALPHABETIC.toString());
+		}
+		config.commit();
 		
 	}
+
+    public void setListWidgetConfiguration(int widgetId, Constants.ListOrder order){
+        Editor config = this.preferences.edit();
+
+        config.putString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, order.toString());
+
+        config.commit();
+    }
+
+    public Constants.ListOrder getListWidgetOrder(int widgetId){
+        return Constants.ListOrder.valueOf(this.preferences.getString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, Constants.ListOrder.ALPHABETIC.toString()));
+    }
+
+
 
 	public void launchAutoUpdate(int triger) {
 		Log.v(TAG, "launchAutoUpdate"+triger);

@@ -1,8 +1,12 @@
 package es.jaumesingla.ultrasearch.widgets;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-import android.app.PendingIntent;
+import junit.framework.Assert;
+
+import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.database.Scheme.Applications;
@@ -16,13 +20,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import es.jaumesingla.ultrasearch.widgets.activities.LaunchAppActivity;
 
 public class ListWidgetFactory implements RemoteViewsService.RemoteViewsFactory {
 
 	private static final String TAG = "ListWidgetFactory";
 	private ArrayList<InfoLaunchApplication> listApps;
 	private Context context;
+    private Comparator<InfoLaunchApplication> comparator;
 	
 
 	public ListWidgetFactory(Context ctxt, Intent intent) {
@@ -30,6 +34,20 @@ public class ListWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
 		Applications appsInterface = UltraSearchApp.getInstance().getDataBase().getApplications();
 		listApps=appsInterface.getApplications();
 		this.context=ctxt;
+        //comparator=(Comparator<InfoLaunchApplication>) intent.getSerializableExtra(ListWidgetProvider.COMPARATOR);
+		Assert.assertNotNull(intent.getStringExtra(ListWidgetProvider.COMPARATOR));
+        switch (Constants.ListOrder.valueOf(intent.getStringExtra(ListWidgetProvider.COMPARATOR))) {
+            case ALPHABETIC:
+                comparator=InfoLaunchApplication.getSortByName();
+                break;
+            case LAST_RUN:
+                comparator=InfoLaunchApplication.getSortByLaunch();
+                break;
+            case RUN_COUNT:
+                comparator=InfoLaunchApplication.getSortByLaunchCount();
+                break;
+        }
+        Collections.sort(listApps, comparator);
 	}
 	
 	@Override
@@ -78,14 +96,7 @@ public class ListWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
 		extras.putInt("TestInt", 34);
         Intent intent = new Intent();
         intent.putExtras(extras);
-        /*intent.putExtra(LaunchAppActivity.APP_INFO_KEY,app);
-        intent.putExtra("TestInt", 34);*/
-        //intent.setAction(ListWidgetProvider.LAUNCH_APP);
 
-        //PendingIntent pendingIntent=PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //PendingIntent pendingIntent=PendingIntent.
-
-        //view.setOnClickPendingIntent(R.id.widgetCell,pendingIntent);
         view.setOnClickFillInIntent(R.id.widgetCell, intent);
 		return view;
 	}
@@ -98,7 +109,7 @@ public class ListWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
 	@Override
 	public boolean hasStableIds() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override
@@ -109,8 +120,9 @@ public class ListWidgetFactory implements RemoteViewsService.RemoteViewsFactory 
 
 	@Override
 	public void onDataSetChanged() {
-		// TODO Auto-generated method stub
-		
+        Applications appsInterface = UltraSearchApp.getInstance().getDataBase().getApplications();
+        listApps=appsInterface.getApplications();
+        Collections.sort(listApps, comparator);
 	}
 
 	@Override

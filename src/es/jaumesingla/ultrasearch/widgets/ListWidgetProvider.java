@@ -3,18 +3,15 @@ package es.jaumesingla.ultrasearch.widgets;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
-import es.jaumesingla.ultrasearch.widgets.activities.LaunchAppActivity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.sax.StartElementListener;
 import android.util.Log;
 import android.widget.RemoteViews;
+import es.jaumesingla.ultrasearch.widgets.activities.ListWidgetSettings;
 
 public class ListWidgetProvider extends AppWidgetProvider {
 	
@@ -22,6 +19,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
 	private static final String TAG = "ListWidgetProvider";
 	public static final String LAUNCH_PACKAGE_NAME = "LaunchPackageName";
 	public static final String LAUNCH_ACTIVITY_NAME = "LaunchActivityName";
+    public static final String COMPARATOR = "ComparatorConfiguration";
 	
 	
 	@Override
@@ -34,9 +32,11 @@ public class ListWidgetProvider extends AppWidgetProvider {
 	}
 	
 	public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int widgetId){
+		Log.d(TAG, "updateWidget:"+widgetId);
 		Intent adapterIntent=new Intent(context, ListWidgetService.class);
 	      
 		adapterIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        adapterIntent.putExtra(COMPARATOR, UltraSearchApp.getInstance().getListWidgetOrder(widgetId).toString());
 		adapterIntent.setData(Uri.parse(adapterIntent.toUri(Intent.URI_INTENT_SCHEME)));
 		
 		RemoteViews widgetView = new RemoteViews(context.getPackageName(), R.layout.widget_list);

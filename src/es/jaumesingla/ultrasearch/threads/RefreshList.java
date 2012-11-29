@@ -1,21 +1,39 @@
 package es.jaumesingla.ultrasearch.threads;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import junit.framework.Assert;
 
-import android.content.pm.PackageManager;
-import android.util.Log;
-
+import es.jaumesingla.ultrasearch.Constants;
+import es.jaumesingla.ultrasearch.Constants.ListOrder;
+import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.MainActivity;
 
 public class RefreshList implements Runnable {
 	private static final String TAG = "RefreshList";
 	private MainActivity dependence;
+	private Comparator<InfoLaunchApplication> comparator;
 	
 	public RefreshList(MainActivity base){
 		dependence=base;
+		ListOrder order = ListOrder.valueOf(UltraSearchApp.getInstance().getPreferences().getString(Constants.Preferences.LIST_ORDER, ListOrder.ALPHABETIC.toString()));
+		
+		switch(order){
+		case ALPHABETIC:
+			comparator=InfoLaunchApplication.getSortByName();
+			break;
+		case LAST_RUN:
+			comparator=InfoLaunchApplication.getSortByLaunch();
+			break;
+		case RUN_COUNT:
+			comparator=InfoLaunchApplication.getSortByLaunchCount();
+			break;
+		default:
+			break;
+		}
 	}
 	
 	public class sendRefresh implements Runnable{
@@ -51,6 +69,8 @@ public class RefreshList implements Runnable {
 				newData.add(ip);
 			}
 		}
+		
+		Collections.sort(newData, comparator);
 		
 		dependence.getHandlerView().post(new sendRefresh(newData));
 		dependence.finishRefresh();

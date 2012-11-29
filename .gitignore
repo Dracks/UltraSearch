@@ -4,3 +4,6 @@
 /gen/
 /proguard-project.txt
 /project.properties
+.DS_Store
+.idea/
+UltraSearch.iml

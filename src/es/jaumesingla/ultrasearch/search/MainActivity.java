@@ -1,7 +1,6 @@
 package es.jaumesingla.ultrasearch.search;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.Constants.ListMode;
@@ -26,7 +25,6 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +46,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,6 +57,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements DataBaseChanged{
 	
 	
+	private static final int ACTIVITY_SETTINGS = 3;
+
 	private final String TAG="MainActivity";
 
     //@SuppressLint("NewApi")
@@ -166,14 +167,11 @@ public class MainActivity extends Activity implements DataBaseChanged{
         et.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 				
 			}
 			
@@ -186,6 +184,15 @@ public class MainActivity extends Activity implements DataBaseChanged{
 				}
 			}
 		});
+        
+        ((ImageButton) findViewById(R.id.ibClearText)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				searcher.setText("");
+			}
+		});
+        
         searchBar= (LinearLayout) findViewById(R.id.llSearchBar);
         searchText= (TextView) findViewById(R.id.txtSearch);
         searchBar.setVisibility(View.GONE);
@@ -303,7 +310,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
                 return true;
             case R.id.menu_settings:
             	Intent settings=new Intent(this, SettingsActivity.class);
-            	startActivity(settings);
+            	startActivityForResult(settings, ACTIVITY_SETTINGS);
             	return true;
             case R.id.menu_share:
             	share=new Intent(Intent.ACTION_SEND);
@@ -428,12 +435,19 @@ public class MainActivity extends Activity implements DataBaseChanged{
 				MainActivity.this.setRequireRefresh();
 			}
 		}).execute();
-		
 	}
 
 
 	public void setNumColumns() {
 		Log.d(TAG, "setNumColumns"+gridItems.getWidth()+" / "+cellWidth);
 		this.gridAdapter.setNumColums(gridItems.getWidth()/cellWidth);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode==ACTIVITY_SETTINGS){
+			this.setRequireRefresh();
+		}
 	}
 }

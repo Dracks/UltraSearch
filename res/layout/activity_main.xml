@@ -21,7 +21,7 @@
 
         <EditText
             android:id="@+id/inputText"
-            android:layout_width="0dip"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
@@ -29,6 +29,12 @@
             android:inputType="textFilter"
             android:imeOptions="flagNoFullscreen|actionGo"
             style="@style/AppTheme.TopMenu"/>
+        <ImageButton 
+            android:id="@+id/ibClearText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cross"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 

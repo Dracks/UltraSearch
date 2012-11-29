@@ -29,5 +29,13 @@
 	<string name="programmed">Programmed by:</string>
 	<string name="dessigned">Designed by:</string>
 	<string name="thanks">Thanks to:</string>
-
+	<!-- Widgets update -->
+    <string name="save">Save</string>
+    <string-array name="widget_order">
+        <item>Alphabetic</item>
+        <item>Last launch</item>
+        <item>Launch count</item>
+    </string-array>
+    <string name="orderList">Order List</string>
+    <string name="orderListDescription">Applications order showed in the list</string>
 </resources>

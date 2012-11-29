@@ -5,8 +5,8 @@
     <corners android:radius="5dip"/>
     <stroke android:width="1dip" android:color="@android:color/black"/>
     <gradient 
-        android:startColor="@android:color/darker_gray" 
-        android:endColor="@android:color/white"
+        android:startColor="@color/grey"
+        android:endColor="@color/white"
         android:angle="0"
         />
     

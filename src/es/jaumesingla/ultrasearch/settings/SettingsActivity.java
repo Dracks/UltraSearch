@@ -3,6 +3,7 @@ package es.jaumesingla.ultrasearch.settings;
 import junit.framework.Assert;
 
 import es.jaumesingla.ultrasearch.Constants;
+import es.jaumesingla.ultrasearch.Constants.ListOrder;
 import es.jaumesingla.ultrasearch.Constants.ListServiceUpdate;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
@@ -25,6 +26,8 @@ public class SettingsActivity extends Activity {
 	private CheckBox updateOnStart;
 	
 	private ListServiceUpdate[] listServiceUpdateValues=ListServiceUpdate.values();
+	private ListOrder[]	listOrderListValues=ListOrder.values();
+	private Spinner spinnerOrderList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class SettingsActivity extends Activity {
 		radioGrid=(RadioButton) findViewById(R.id.rdGrid);
 		radioList=(RadioButton) findViewById(R.id.rdList);
 		spinnerUpdateService=(Spinner) findViewById(R.id.spUpdateService);
+		spinnerOrderList=(Spinner) findViewById(R.id.spOrderList);
 		updateOnStart=(CheckBox) findViewById(R.id.chbUpdateOnStart);
 		
 		SharedPreferences settings = UltraSearchApp.getInstance().getPreferences();
@@ -47,12 +51,19 @@ public class SettingsActivity extends Activity {
 			radioGrid.setChecked(true);
 		}
 		
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,  R.array.service_update, android.R.layout.simple_spinner_item );
+		ArrayAdapter<CharSequence> adapter;
 		
+		adapter = ArrayAdapter.createFromResource(this, R.array.widget_order, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerOrderList.setAdapter(adapter);
+        
+        ListOrder orderOption=ListOrder.valueOf(settings.getString(Constants.Preferences.LIST_ORDER, ListOrder.ALPHABETIC.toString()));
+        
+        spinnerOrderList.setSelection(getListOrderIndex(orderOption));
+		
+		adapter= ArrayAdapter.createFromResource(this,  R.array.service_update, android.R.layout.simple_spinner_item );
 		Assert.assertEquals(adapter.getCount(), listServiceUpdateValues.length);
-		
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		
 		spinnerUpdateService.setAdapter(adapter);
 		
 		ListServiceUpdate option=ListServiceUpdate.valueOf(settings.getString(Constants.Preferences.UPDATE_SERVICE_KEY, ListServiceUpdate.TWO_DAYS.toString()));
@@ -63,7 +74,7 @@ public class SettingsActivity extends Activity {
 		
 		
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onDestroy();
@@ -79,9 +90,12 @@ public class SettingsActivity extends Activity {
 			
 		editablePreferences.putString(Constants.Preferences.LIST_MODE_KEY, listConfig.toString());
 		editablePreferences.putString(Constants.Preferences.UPDATE_SERVICE_KEY, listServiceUpdateValues[spinnerUpdateService.getSelectedItemPosition()].toString());
+		editablePreferences.putString(Constants.Preferences.LIST_ORDER,  listOrderListValues[spinnerOrderList.getSelectedItemPosition()].toString());
 		editablePreferences.putBoolean(Constants.Preferences.UPDATE_DB_ON_START, updateOnStart.isChecked());
 		
 		editablePreferences.commit();
+		
+		setResult(Activity.RESULT_OK);
 	}
 	
 	@Override
@@ -98,7 +112,16 @@ public class SettingsActivity extends Activity {
 		}
 		Assert.assertTrue(false);
 		return 0;
-		
+	}
+	
+	private int getListOrderIndex(ListOrder orderOption) {
+		for (int i=0; i<listOrderListValues.length; i++){
+			if (listOrderListValues[i]==orderOption){
+				return i;
+			}
+		}
+		Assert.assertTrue(false);
+		return 0;
 	}
 
 }
