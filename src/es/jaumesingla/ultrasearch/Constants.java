@@ -26,5 +26,6 @@ public class Constants {
 	
 	public static class Time{
 		public static final int DAYS=1000*3600*24;
+		public static final int DAYS_STATISTICS=33;
 	}
 }

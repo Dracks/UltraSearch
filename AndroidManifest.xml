@@ -65,6 +65,7 @@
         <receiver android:name=".widgets.ListWidgetProvider" android:label="a-- WidgetSearch">
 		    <intent-filter>
 		        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+		        <action android:name="es.jaumesingla.UltraSearchApp.ACTION_UPDATE_WIDGET" />
 		    </intent-filter>
 		    <meta-data android:name="android.appwidget.provider" android:resource="@xml/list_widget" />
 		</receiver>

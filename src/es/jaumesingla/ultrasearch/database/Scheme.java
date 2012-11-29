@@ -3,8 +3,12 @@ package es.jaumesingla.ultrasearch.database;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import es.jaumesingla.ultrasearch.Constants;
+import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.viewlisteners.InfoApplication;
+import es.jaumesingla.ultrasearch.widgets.ListWidgetProvider;
+import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -177,6 +181,7 @@ public class Scheme {
 		
 		public void launchApp(InfoLaunchApplication app){
 			this.markLaunch(Statistics.getKey(app), Type_values.APPLICATION.toString());
+			ListWidgetProvider.launchUpdate();
 		}
 		
 		private void markLaunch(String key, String type){
@@ -188,7 +193,7 @@ public class Scheme {
 		}
 		
 		public void clearOld(){
-			db.delete(TABLE, COLUMN_LAUNCH+" < "+Long.toString(System.currentTimeMillis()/1000-33*24*3600), null);
+			db.delete(TABLE, COLUMN_LAUNCH+" < "+Long.toString(System.currentTimeMillis()/1000-Constants.Time.DAYS*Constants.Time.DAYS_STATISTICS), null);
 		}
 	}
 }

@@ -289,6 +289,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	protected void launchMarket(){
 		Intent share=new Intent(Intent.ACTION_VIEW);
     	share.setData(Uri.parse("market://search?q="+filter));
+    	share.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
     	startActivity(Intent.createChooser(share, "-- Search in market"));
 	}
 	

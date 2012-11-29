@@ -6,6 +6,7 @@ import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +21,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
 	public static final String LAUNCH_PACKAGE_NAME = "LaunchPackageName";
 	public static final String LAUNCH_ACTIVITY_NAME = "LaunchActivityName";
     public static final String COMPARATOR = "ComparatorConfiguration";
+	private static final String ACTION_UPDATE_LIST = "es.jaumesingla.UltraSearchApp.ACTION_UPDATE_WIDGET";
 	
 	
 	@Override
@@ -54,6 +56,11 @@ public class ListWidgetProvider extends AppWidgetProvider {
 		widgetView.setPendingIntentTemplate(R.id.widget_grid, pendingIntentTemplate);
 		
 		appWidgetManager.updateAppWidget(widgetId, widgetView);
+		try{
+			appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, R.id.widget_grid);
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	/*
 	@Override
@@ -81,6 +88,17 @@ public class ListWidgetProvider extends AppWidgetProvider {
 			Intent newIntent=app.getIntentLaunch();
 			UltraSearchApp.getInstance().getDataBase().getStatistics().launchApp(app);
 			context.startActivity(newIntent);
+		} else if (intent.getAction().equals(ListWidgetProvider.ACTION_UPDATE_LIST)){
+			
+			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+			ComponentName cmp=new ComponentName(context, ListWidgetProvider.class);
+			this.onUpdate(context, appWidgetManager, appWidgetManager.getAppWidgetIds(cmp));
 		}
+		
 	}//*/
+	
+	public static void launchUpdate(){
+		Intent i=new Intent(ListWidgetProvider.ACTION_UPDATE_LIST);
+		UltraSearchApp.getInstance().getBaseContext().sendBroadcast(i);
+	}
 }
