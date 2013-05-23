@@ -54,13 +54,12 @@
         <activity 
             android:name=".widgets.activities.ListWidgetSettings"
             android:label="@string/menu_settings"
-            android:theme="@style/AppTheme.Dialog"
+
             >
             <intent-filter>
 		        <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
 		    </intent-filter>
         </activity>
-        <activity android:name=".widgets.activities.LaunchAppActivity"/>
 
         <receiver android:name=".widgets.ListWidgetProvider" android:label="a-- WidgetSearch">
 		    <intent-filter>

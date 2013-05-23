@@ -1,5 +1,6 @@
 <resources>
-    <color name="white_transulcid">#55AAAAAA</color>
+    <color name="white_transulcid">#AAEEEEEE</color>
     <color name="grey">#AAAAAA</color>
     <color name="white">#FFFFFF</color>
+	<color name="dark_grey">#444444</color>
 </resources>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="146dp"
-    android:minHeight="56dp"
+    android:minWidth="180dp"
+    android:minHeight="40dp"
+	android:minResizeWidth="40dp"
     android:initialLayout="@layout/widget_list"
     android:configure="es.jaumesingla.ultrasearch.widgets.activities.ListWidgetSettings"
     android:resizeMode="horizontal|vertical"

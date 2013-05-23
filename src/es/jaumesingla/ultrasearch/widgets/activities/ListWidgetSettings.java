@@ -39,9 +39,12 @@ public class ListWidgetSettings extends Activity {
             @Override
             public void onClick(View view) {
                 int widgetId = getIntent().getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+
                 ListOrder optionSelected=ListOrder.values()[listOptionsSpinner.getSelectedItemPosition()];
-                UltraSearchApp.getInstance().setListWidgetConfiguration(widgetId, optionSelected);
-                
+				UltraSearchApp app = UltraSearchApp.getInstance();
+                app.setListWidgetConfiguration(widgetId, optionSelected);
+                app.setListWidget(widgetId, 3, 1);
+
                 ListWidgetProvider.updateWidget(getBaseContext(), AppWidgetManager.getInstance(getBaseContext()), widgetId);
 
                 Intent resultValue = new Intent();

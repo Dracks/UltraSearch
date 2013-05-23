@@ -1,6 +1,7 @@
 package es.jaumesingla.ultrasearch;
 
 public class Constants {
+
 	public enum ListMode{LIST, GRID};
 	public enum ListServiceUpdate{ DAY, TWO_DAYS, WEEKLY, MONTHLY, NEVER };
 	public enum ListOrder { ALPHABETIC, LAST_RUN, RUN_COUNT };
@@ -14,6 +15,7 @@ public class Constants {
 		public static final String UPDATE_DB_ON_START = "update_db_on_start";
 
         public static final String LIST_WIDGET_PREFIX = "list_widget_";
+		public static final String LIST_WIDGET_SPAN = LIST_WIDGET_PREFIX+"_span";
 		public static final String LIST_ORDER = "list_order";
     }
 

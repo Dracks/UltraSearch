@@ -196,4 +196,13 @@ public class Scheme {
 			db.delete(TABLE, COLUMN_LAUNCH+" < "+Long.toString(System.currentTimeMillis()/1000-Constants.Time.DAYS*Constants.Time.DAYS_STATISTICS), null);
 		}
 	}
+	/*
+	public static class Configuration{
+		public enum Type_values {WIDGET, APPLICATION};
+		public static final String TABLE="Configuration";
+		public static final String COLUMN_TYPE="type";
+		public static final String COLUMN_ID="id";
+		public static final String COLUMN_LAUNCH="ts";
+	}
+	*/
 }

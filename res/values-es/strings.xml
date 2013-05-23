@@ -20,7 +20,7 @@
 	<string name="search_in_market">Buscar <i>%1$s</i> en Google Play</string>
 	<string name="resultsList">Modo lista de resultados</string>
 	<string name="resultsListDescription">Mostrar los resultados de la búsqueda en una lista o utilizar botones optimizados para el tamaño de la pantalla</string>
-	<string name="resultsList_Grid">Cuadrícula de botones</string>
+	<string name="resultsList_Grid">Cuadrícula</string>
 	<string name="resultsList_List">Lista</string>
 	<string name="updateDatabase">Actualizar base de datos</string>
 	<string name="updateDatabaseDescription">El periodo de tiempo en el que desea que se refresque la base de datos de aplicaciones</string>

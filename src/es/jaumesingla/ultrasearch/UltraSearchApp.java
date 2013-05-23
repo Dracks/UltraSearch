@@ -134,6 +134,23 @@ public class UltraSearchApp extends Application {
         return Constants.ListOrder.valueOf(this.preferences.getString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, Constants.ListOrder.ALPHABETIC.toString()));
     }
 
+	public void setListWidget(int widgetId, int x, int y){
+		Editor config = this.preferences.edit();
+		Log.d(TAG, "listWidget: "+widgetId+", "+x+", "+y);
+
+		config.putInt(Constants.Preferences.LIST_WIDGET_SPAN+"_x_"+widgetId, x);
+		config.putInt(Constants.Preferences.LIST_WIDGET_SPAN+"_y_"+widgetId, y);
+		config.commit();
+	}
+
+	public int getListWidgetX(int widgetId){
+		return this.preferences.getInt(Constants.Preferences.LIST_WIDGET_SPAN+"_x_"+widgetId, 3);
+	}
+
+	public int getListWidgetY(int widgetId){
+		return this.preferences.getInt(Constants.Preferences.LIST_WIDGET_SPAN+"_y_"+widgetId, 1);
+	}
+
 
 
 	public void launchAutoUpdate(int triger) {

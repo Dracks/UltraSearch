@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget_grid"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/widget_list"
-    android:columnWidth="60dip"
-    android:horizontalSpacing="10dip"
-    android:verticalSpacing="10dip"
-    android:numColumns="auto_fit"
-    android:padding="5dp"
-    android:isScrollContainer="false"
-     >
-
-</GridView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/widget_column"
+	    android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:background="@drawable/widget_list"
+		android:padding="5dp"
+		android:layout_height="fill_parent"
+		>
+</LinearLayout>
