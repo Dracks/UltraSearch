@@ -2,9 +2,13 @@ package es.jaumesingla.ultrasearch;
 
 public class Constants {
 
-	public enum ListMode{LIST, GRID};
-	public enum ListServiceUpdate{ DAY, TWO_DAYS, WEEKLY, MONTHLY, NEVER };
-	public enum ListOrder { ALPHABETIC, LAST_RUN, RUN_COUNT };
+	public enum ListMode{LIST, GRID}
+	public enum ListServiceUpdate{ DAY, TWO_DAYS, WEEKLY, MONTHLY, NEVER }
+	public enum ListOrder { ALPHABETIC, LAST_RUN, RUN_COUNT }
+	public static class WidgetBundle{
+		public static final String KEY_ORDER="order";
+		public static final String KEY_SEARCH="search";
+	}
 	public static class Preferences{
 		public static final String 	LIST_MODE_KEY="list_mode";
 		public static final String 	UPDATE_SERVICE_KEY="update_service";

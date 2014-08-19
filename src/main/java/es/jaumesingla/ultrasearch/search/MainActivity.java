@@ -292,8 +292,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
     	share.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
     	startActivity(Intent.createChooser(share, "-- Search in market"));
 	}
-	
-	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

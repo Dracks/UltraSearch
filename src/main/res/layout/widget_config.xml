@@ -6,6 +6,18 @@
       android:padding="5dip"
       android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/txtTitleSearch"
+        android:text="@string/orderList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etQueryText"/>
+
     <RelativeLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"

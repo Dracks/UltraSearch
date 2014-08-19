@@ -110,13 +110,26 @@ public class ListWidgetProvider extends AppWidgetProvider {
 		}
 
 		UltraSearchApp app = UltraSearchApp.getInstance();
+		Bundle config=app.getListWidgetConfiguration(widgetId);
+		String query=config.getString(Constants.WidgetBundle.KEY_SEARCH);
 
-		Scheme.Applications appsInterface = UltraSearchApp.getInstance().getDataBase().getApplications();
+		Scheme.Applications appsInterface = app.getDataBase().getApplications();
 		ArrayList<InfoLaunchApplication> listApps=appsInterface.getApplications();
 		ArrayList<InfoLaunchApplication> rawListApps=appsInterface.getApplications();
+		if (query!=null && !query.equalsIgnoreCase("")){
+			ArrayList<InfoLaunchApplication> newArray=new ArrayList<InfoLaunchApplication>();
+			for (InfoLaunchApplication info: listApps){
+				if (info.contains(query)){
+					newArray.add(info);
+				}
+			}
+			listApps=newArray;
+		}
 		//comparator=(Comparator<InfoLaunchApplication>) intent.getSerializableExtra(ListWidgetProvider.COMPARATOR);
 		Comparator<InfoLaunchApplication> comparator=null;
-		switch (app.getListWidgetOrder(widgetId)) {
+
+		Constants.ListOrder order=Constants.ListOrder.valueOf(config.getString(Constants.WidgetBundle.KEY_ORDER));
+		switch (order) {
 			case ALPHABETIC:
 				comparator=InfoLaunchApplication.getSortByName();
 				break;
@@ -135,25 +148,31 @@ public class ListWidgetProvider extends AppWidgetProvider {
 		int numSizeX= (int) (sizex/cellWidth);
 		int numSizeY=(int)(sizey/cellHeight);
 		Log.d(TAG, "NumSize:"+numSizeX+","+numSizeY);
-		for (int i=0; i<numSizeY; i++){
+		boolean allApplicationsShowed=false;
+		for (int i=0; i<numSizeY && !allApplicationsShowed; i++){
 			Log.d(TAG, "Printing row i"+ i);
 			RemoteViews widgetRowView=new RemoteViews(context.getPackageName(), R.layout.widget_list_row);
+			widgetRowView.removeAllViews(R.layout.cell_widget);
 			widgetView.addView(R.id.widget_column,widgetRowView);
-			for (int j=0; j<numSizeX; j++){
+			for (int j=0; j<numSizeX && !allApplicationsShowed; j++){
 				Log.d(TAG, "Printing column j"+ j);
-				RemoteViews view=new RemoteViews(context.getPackageName(), R.layout.cell_widget);
-				widgetRowView.addView(R.id.widget_row,view);
 				int index=i*numSizeX+j;
-				boolean completed=false;
-				while (!completed){
-					try{
-						InfoLaunchApplication appInfo = listApps.get(index);
-						completeRemoteViewCell(context, view, appInfo, rawListApps.indexOf(appInfo));
-						completed=true;
-					} catch (Exception e){
-						e.printStackTrace();
-						listApps.remove(index);
+				if (index<listApps.size()) {
+					RemoteViews view=new RemoteViews(context.getPackageName(), R.layout.cell_widget);
+					widgetRowView.addView(R.id.widget_row,view);
+					boolean completed = false;
+					while (!completed) {
+						try {
+							InfoLaunchApplication appInfo = listApps.get(index);
+							completeRemoteViewCell(context, view, appInfo, rawListApps.indexOf(appInfo));
+							completed = true;
+						} catch (Exception e) {
+							e.printStackTrace();
+							listApps.remove(index);
+						}
 					}
+				} else {
+					allApplicationsShowed=true;
 				}
 			}
 		}
@@ -218,7 +237,11 @@ public class ListWidgetProvider extends AppWidgetProvider {
 			this.onUpdate(context, appWidgetManager, appWidgetManager.getAppWidgetIds(cmp));
 		} else if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED) || intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)){
 			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-			updateWidget(context, appWidgetManager, intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID));
+			try {
+				updateWidget(context, appWidgetManager, intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID));
+			} catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 	}//*/
 

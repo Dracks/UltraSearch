@@ -3,6 +3,7 @@
     android:minWidth="180dp"
     android:minHeight="40dp"
 	android:minResizeWidth="40dp"
+    android:maxWidth="200dp"
     android:initialLayout="@layout/widget_list"
     android:configure="es.jaumesingla.ultrasearch.widgets.activities.ListWidgetSettings"
     android:resizeMode="horizontal|vertical"

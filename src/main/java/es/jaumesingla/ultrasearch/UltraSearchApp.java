@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -135,16 +136,25 @@ public class UltraSearchApp extends Application {
 		
 	}
 
-    public void setListWidgetConfiguration(int widgetId, Constants.ListOrder order){
+    public void setListWidgetConfiguration(int widgetId, Constants.ListOrder order, String query){
         Editor config = this.preferences.edit();
 
-        config.putString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, order.toString());
+        config.putString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, order.toString()+";"+query);
 
         config.commit();
     }
 
-    public Constants.ListOrder getListWidgetOrder(int widgetId){
-        return Constants.ListOrder.valueOf(this.preferences.getString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, Constants.ListOrder.ALPHABETIC.toString()));
+    public Bundle getListWidgetConfiguration(int widgetId){
+	    String[] s=this.preferences.getString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, ListOrder.LAST_RUN.toString()).split(";");
+	    Bundle ret=new Bundle();
+	    ret.putString(Constants.WidgetBundle.KEY_ORDER,s[0]);
+	    if (s.length>1){
+		    ret.putString(Constants.WidgetBundle.KEY_SEARCH, s[1]);
+	    } else {
+		    ret.putString(Constants.WidgetBundle.KEY_SEARCH, "");
+	    }
+	    return ret;
+        //return Constants.ListOrder.valueOf(this.preferences.getString(Constants.Preferences.LIST_WIDGET_PREFIX+widgetId, Constants.ListOrder.ALPHABETIC.toString()));
     }
 
 	public void setListWidget(int widgetId, int x, int y){
@@ -188,6 +198,7 @@ public class UltraSearchApp extends Application {
 	public void launchApplicationInfo(InfoLaunchApplication app){
 		Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", app.getPackageName(), null));
 		// start new activity to display extended information
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		this.startActivity(intent);
 	}
 
