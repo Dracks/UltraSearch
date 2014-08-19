@@ -14,6 +14,8 @@ import es.jaumesingla.ultrasearch.threads.RefreshList;
 
 import junit.framework.Assert;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -127,12 +129,22 @@ public class MainActivity extends Activity implements DataBaseChanged{
 				MainActivity.this.launchApp(listAdapter.getItem(item));
 			}
 		};
+
+		AdapterView.OnItemLongClickListener onOptionsClickListener = new AdapterView.OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> adapterView, View view, int item, long l) {
+				MainActivity.this.launchOptionsApp(listAdapter.getItem(item));
+				return true;
+			}
+		};
         
         listItems=(ListView)findViewById(R.id.resultSearchList);
         listItems.setAdapter(listAdapter);
         //listItems.setItemsCanFocus(false);
         
         listItems.setOnItemClickListener(launchItemClick);
+		listItems.setOnItemLongClickListener(onOptionsClickListener);
         
         gridItems=(GridView) findViewById(R.id.resultSearchGrid);
         //((ExpandableGridView) gridItems).setExpanded(true);
@@ -284,6 +296,19 @@ public class MainActivity extends Activity implements DataBaseChanged{
 					R.string.app_not_found, Toast.LENGTH_SHORT);
 			t.show();
 		}
+	}
+
+	protected void launchOptionsApp(InfoLaunchApplication app){
+		AlertDialog.Builder builder=new AlertDialog.Builder(this);
+		builder.setTitle(R.string.optionsAppTitle);
+		String textMessage=getResources().getText(R.string.optionsAppText).toString().replaceAll("%s", app.getName());
+		builder.setMessage(textMessage);
+		builder.setItems(R.array.optionsApp, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				Log.d(TAG, "Dialong click listener");
+			}
+		});
 	}
 	
 	protected void launchMarket(){

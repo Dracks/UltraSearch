@@ -90,14 +90,15 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
 		final float scale = context.getResources().getDisplayMetrics().density;
 
-		float cellHeight=(49)*scale;
-		float cellWidth=(49)*scale;
+		float cellHeight=(42)*scale;
+		float cellWidth=(42)*scale;
 
 		float sizex=cellWidth*3;
 		float sizey=cellHeight;
 		try{
 			Bundle data = appWidgetManager.getAppWidgetOptions(widgetId);
 			debugBundle(data);
+			Log.d(TAG, "Size cell: "+cellWidth+","+cellHeight);
 
 			sizex=data.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
 			sizey=data.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);

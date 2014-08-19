@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="19" />
     
      <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -14,6 +14,7 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:allowBackup="true"
         android:theme="@style/AppTheme"
         android:name="es.jaumesingla.ultrasearch.UltraSearchApp" 
         >
@@ -34,8 +35,7 @@
         </activity>
         <activity
             android:name=".settings.SettingsActivity" 
-            android:label="@string/menu_settings"
-            android:theme="@style/AppTheme.Dialog">
+            android:label="@string/menu_settings">
         </activity>
         <activity
             android:name=".about.AboutActivity" 
