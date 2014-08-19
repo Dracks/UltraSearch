@@ -6,7 +6,6 @@ import java.util.HashMap;
 import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
-import es.jaumesingla.ultrasearch.search.viewlisteners.InfoApplication;
 import es.jaumesingla.ultrasearch.widgets.ListWidgetProvider;
 import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;

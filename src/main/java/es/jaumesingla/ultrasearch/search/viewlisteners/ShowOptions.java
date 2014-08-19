@@ -1,26 +1,22 @@
 package es.jaumesingla.ultrasearch.search.viewlisteners;
 
+import es.jaumesingla.ultrasearch.UltraSearchApp;
+import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.ResultsViewAdapter.ViewHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 public class ShowOptions implements OnClickListener {
 
-		
-	private ViewHolder holder;
-	
-	public ShowOptions(ViewHolder holder){
-		this.holder=holder;
-	}
 
+	private final InfoLaunchApplication item;
+
+	public ShowOptions(InfoLaunchApplication item){
+		this.item=item;
+	}
 	@Override
 	public void onClick(View v) {
-		int visibility = holder.optionsView.getVisibility();
-		if (visibility==View.GONE){
-			holder.optionsView.setVisibility(View.VISIBLE);
-		} else {
-			holder.optionsView.setVisibility(View.GONE);
-		}
+		UltraSearchApp.getInstance().launchOptionsApp(this.item);
 	}
 
 }

@@ -110,6 +110,8 @@ public class MainActivity extends Activity implements DataBaseChanged{
         
         
         this.refreshSettings();
+
+		UltraSearchApp.getInstance().registerActivity(this);
         
         listPackages=new ArrayList<InfoLaunchApplication>();
         blockRefreshRequire=new Object();
@@ -126,7 +128,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int item, long group) {
 				Log.d(TAG, "OnItemClickListener");
-				MainActivity.this.launchApp(listAdapter.getItem(item));
+				UltraSearchApp.getInstance().launchApp(listAdapter.getItem(item));
 			}
 		};
 
@@ -134,7 +136,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapterView, View view, int item, long l) {
-				MainActivity.this.launchOptionsApp(listAdapter.getItem(item));
+				UltraSearchApp.getInstance().launchOptionsApp(listAdapter.getItem(item));
 				return true;
 			}
 		};
@@ -281,34 +283,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	
 	protected void launchFirst(){
 		if (listAdapter.getCount()>0)
-			this.launchApp(listAdapter.getItem(0));
-	}
-	
-	protected void launchApp(InfoLaunchApplication app) {
-		//Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName.resolvePackageName);
-		//if (mIntent != null) {
-		UltraSearchApp.getInstance().getDataBase().getStatistics().launchApp(app);
-		Intent mIntent=app.getIntentLaunch();
-		try {
-			startActivity(mIntent);
-		} catch (ActivityNotFoundException err) {
-			Toast t = Toast.makeText(getApplicationContext(),
-					R.string.app_not_found, Toast.LENGTH_SHORT);
-			t.show();
-		}
-	}
-
-	protected void launchOptionsApp(InfoLaunchApplication app){
-		AlertDialog.Builder builder=new AlertDialog.Builder(this);
-		builder.setTitle(R.string.optionsAppTitle);
-		String textMessage=getResources().getText(R.string.optionsAppText).toString().replaceAll("%s", app.getName());
-		builder.setMessage(textMessage);
-		builder.setItems(R.array.optionsApp, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialogInterface, int i) {
-				Log.d(TAG, "Dialong click listener");
-			}
-		});
+			UltraSearchApp.getInstance().launchApp(listAdapter.getItem(0));
 	}
 	
 	protected void launchMarket(){
@@ -383,9 +358,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
 				this.listAdapter.notifyDataSetChanged();
 			else
 				this.gridAdapter.notifyDataSetChanged();
-			
-			this.listAdapter.clear();
-			this.gridAdapter.clear();
 		}
 	}
 

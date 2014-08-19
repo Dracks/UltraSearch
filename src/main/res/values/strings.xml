@@ -38,11 +38,11 @@
     </string-array>
     <string name="orderList">Order List</string>
     <string name="orderListDescription">Applications order showed in the list</string>
+    <!-- Dialog applications options -->
     <string name="optionsAppTitle">Actions application</string>
-    <string name="optionsAppText">The following actions can be done for %s application</string>
     <string-array name="optionsApp">
-        <item>Hola holita 1</item>
-        <item>Hola holita 2</item>
-        <item>Hola holita 3</item>
+        <item>Launch application</item>
+        <item>Share application</item>
+        <item>Show application information</item>
     </string-array>
 </resources>

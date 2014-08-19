@@ -53,7 +53,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
 		}
 	}
 
-	public static void completeRemoteViewCell(Context context, RemoteViews cell, InfoLaunchApplication app) throws PackageManager.NameNotFoundException {
+	public static void completeRemoteViewCell(Context context, RemoteViews cell, InfoLaunchApplication app,int appId) throws PackageManager.NameNotFoundException {
 		PackageManager pm=context.getPackageManager();
 		Drawable icon=context.getResources().getDrawable(R.drawable.ic_launcher);
 
@@ -70,10 +70,11 @@ public class ListWidgetProvider extends AppWidgetProvider {
 		//extras.putSerializable(LaunchAppActivity.APP_INFO_KEY,app);
 		extras.putString(ListWidgetProvider.LAUNCH_PACKAGE_NAME, app.getPackageName());
 		extras.putString(ListWidgetProvider.LAUNCH_ACTIVITY_NAME, app.getActivity());
-		extras.putInt("TestInt", 34);
-		Intent intent = new Intent();
+		Intent intent = new Intent(context, ListWidgetProvider.class);
 		intent.putExtras(extras);
-		PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0,extras);
+		intent.setAction(LAUNCH_APP);
+		//PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,0,extras);
+		PendingIntent pendingIntent=PendingIntent.getBroadcast(context, appId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		cell.setOnClickPendingIntent(R.id.widgetCell, pendingIntent);
 		//cell.setOnClickFillInIntent();
@@ -102,6 +103,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
 			sizex=data.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
 			sizey=data.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+
+			//appWidgetManager.getAppWidgetInfo(widgetId).
 		} catch (NoSuchMethodError e){
 
 		}
@@ -110,6 +113,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
 		Scheme.Applications appsInterface = UltraSearchApp.getInstance().getDataBase().getApplications();
 		ArrayList<InfoLaunchApplication> listApps=appsInterface.getApplications();
+		ArrayList<InfoLaunchApplication> rawListApps=appsInterface.getApplications();
 		//comparator=(Comparator<InfoLaunchApplication>) intent.getSerializableExtra(ListWidgetProvider.COMPARATOR);
 		Comparator<InfoLaunchApplication> comparator=null;
 		switch (app.getListWidgetOrder(widgetId)) {
@@ -143,7 +147,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
 				boolean completed=false;
 				while (!completed){
 					try{
-						completeRemoteViewCell(context, view, listApps.get(index));
+						InfoLaunchApplication appInfo = listApps.get(index);
+						completeRemoteViewCell(context, view, appInfo, rawListApps.indexOf(appInfo));
 						completed=true;
 					} catch (Exception e){
 						e.printStackTrace();
@@ -161,7 +166,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
 		launchIntent.setData(Uri.parse(launchIntent.toUri(Intent.URI_INTENT_SCHEME)));	
 		
 		//PendingIntent pendingIntentTemplate = PendingIntent.getBroadcast(context, 0, launchIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
-		PendingIntent pendingIntentTemplate = PendingIntent.getBroadcast(context, 0, launchIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+		//PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 0, launchIntent,  PendingIntent.FLAG_CANCEL_CURRENT);
 		
 		//widgetView.setPendingIntentTemplate(R.id.widget_column, pendingIntentTemplate);
 		
@@ -199,15 +204,13 @@ public class ListWidgetProvider extends AppWidgetProvider {
 		}
         Log.d(TAG, "End debug intent.getExtras");*/
 		if (intent.getAction().equals(LAUNCH_APP)){
-			//Log.i(TAG, "Extra Widget id:"+intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID));
-			//Log.i(TAG, "Extra 2:"+ intent.getExtras().getInt("TestInt"));
+			Log.i(TAG, "Extra Widget id:"+intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID));
 			
 			Log.i(TAG, "Extras:"+intent.getStringExtra(LAUNCH_PACKAGE_NAME)+"/"+intent.getStringExtra(LAUNCH_ACTIVITY_NAME));
 			
 			InfoLaunchApplication app = UltraSearchApp.getInstance().getDataBase().getApplications().getApplication(intent.getStringExtra(LAUNCH_PACKAGE_NAME), intent.getStringExtra(LAUNCH_ACTIVITY_NAME));
-			Intent newIntent=app.getIntentLaunch();
-			UltraSearchApp.getInstance().getDataBase().getStatistics().launchApp(app);
-			context.startActivity(newIntent);
+
+			UltraSearchApp.getInstance().launchApp(app);
 		} else if (intent.getAction().equals(ListWidgetProvider.ACTION_UPDATE_LIST)){
 			
 			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);

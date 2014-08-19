@@ -9,16 +9,24 @@ import es.jaumesingla.ultrasearch.Constants.ListServiceUpdate;
 import es.jaumesingla.ultrasearch.database.DataBaseInterface;
 import es.jaumesingla.ultrasearch.database.Scheme;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
+import es.jaumesingla.ultrasearch.search.MainActivity;
+import es.jaumesingla.ultrasearch.search.viewlisteners.OptionsAppClickListener;
 import es.jaumesingla.ultrasearch.service.DatabaseUpdateReceiver;
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 public class UltraSearchApp extends Application {
 	
@@ -35,6 +43,7 @@ public class UltraSearchApp extends Application {
 	
 	private ArrayList<DataBaseChanged> listNotifications;
 	private SharedPreferences preferences;
+	private MainActivity currentMain;
 	
 	public static UltraSearchApp getInstance(){
 		return instance;
@@ -59,6 +68,10 @@ public class UltraSearchApp extends Application {
 		}else if (version !=Constants.Preferences.VERSION){
 			this.upgradeConfiguration(version);
 		}
+	}
+
+	public void registerActivity(MainActivity current){
+		this.currentMain=current;
 	}
 
 	@Override
@@ -151,7 +164,39 @@ public class UltraSearchApp extends Application {
 		return this.preferences.getInt(Constants.Preferences.LIST_WIDGET_SPAN+"_y_"+widgetId, 1);
 	}
 
+	public void launchApp(InfoLaunchApplication app) {
+		UltraSearchApp.getInstance().getDataBase().getStatistics().launchApp(app);
+		Intent mIntent=app.getIntentLaunch();
+		try {
+			startActivity(mIntent);
+		} catch (ActivityNotFoundException err) {
+			Toast t = Toast.makeText(getApplicationContext(),
+					R.string.app_not_found, Toast.LENGTH_SHORT);
+			t.show();
+		}
+	}
 
+	public void launchOptionsApp(InfoLaunchApplication app){
+		AlertDialog.Builder builder=new AlertDialog.Builder(currentMain);
+		builder.setTitle(R.string.optionsAppTitle);
+		CharSequence[] items=getResources().getTextArray(R.array.optionsApp);
+		builder.setItems(items, new OptionsAppClickListener(app));
+		builder.setCancelable(true);
+		builder.show();
+	}
+
+	public void launchApplicationInfo(InfoLaunchApplication app){
+		Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", app.getPackageName(), null));
+		// start new activity to display extended information
+		this.startActivity(intent);
+	}
+
+	public void shareApplicationInfo(InfoLaunchApplication app){
+		Intent share=new Intent(Intent.ACTION_SEND);
+		share.setType("text/plain");
+		share.putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id="+app.getPackageName());
+		startActivity(Intent.createChooser(share, getResources().getString(R.string.share)));
+	}
 
 	public void launchAutoUpdate(int triger) {
 		Log.v(TAG, "launchAutoUpdate"+triger);

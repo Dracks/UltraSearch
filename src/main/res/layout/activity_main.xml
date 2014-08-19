@@ -81,12 +81,12 @@
         android:numColumns="auto_fit">
     </GridView> -->
     
-     <es.jaumesingla.ultrasearch.views.ExpandableGridView
+     <GridView
         android:id="@+id/resultSearchGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="auto_fit">
-    </es.jaumesingla.ultrasearch.views.ExpandableGridView>
+    </GridView>
 
 
 </LinearLayout>

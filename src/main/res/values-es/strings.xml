@@ -29,7 +29,6 @@
 	<string name="programmed">Programada por:</string>
 	<string name="dessigned">Diseñada por:</string>
 	<string name="thanks">Gracias a:</string>
-    <string name="optionsAppTitle">Actions application</string>
-    <string name="optionsAppText">The following actions can be done for %s application</string>
+    <string name="optionsAppTitle">Acciones para la aplicación</string>
 
 </resources>
