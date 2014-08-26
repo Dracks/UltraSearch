@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/txtTitleSearch"
-        android:text="@string/orderList"
+        android:text="@string/widgetQueryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium" />

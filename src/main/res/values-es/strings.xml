@@ -29,6 +29,22 @@
 	<string name="programmed">Programada por:</string>
 	<string name="dessigned">Diseñada por:</string>
 	<string name="thanks">Gracias a:</string>
-    <string name="optionsAppTitle">Acciones para la aplicación</string>
+    <!-- Widgets update -->
+    <string name="save">Guardar</string>
+    <string-array name="widget_order">
+        <item>Alfabético</item>
+        <item>Última ejecución</item>
+        <item>Número de ejecuciones</item>
+    </string-array>
+    <string name="orderList">Orden del listado</string>
+    <string name="orderListDescription">Orden de les aplicaciones mostradas en el widget</string>
+    <string name="widgetQueryTitle">Busqueda a utilitzar en el widget:</string>
+    <!-- Dialog applications options -->
+    <string name="optionsAppTitle">Acciones per la aplicación</string>
+    <string-array name="optionsApp">
+        <item>Ejecutar aplicación</item>
+        <item>Compartir aplicacion</item>
+        <item>Mostrar información de la aplicación</item>
+    </string-array>
 
 </resources>

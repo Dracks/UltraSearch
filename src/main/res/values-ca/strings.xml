@@ -29,7 +29,21 @@
 	<string name="programmed">Desenvolupat per:</string>
 	<string name="dessigned">Disseny:</string>
 	<string name="thanks">Agraïments:</string>
-    <string name="optionsAppTitle">Actions application</string>
-    <string name="optionsAppText">The following actions can be done for %s application</string>
-
+    <!-- Widgets update -->
+    <string name="save">Guardar</string>
+    <string-array name="widget_order">
+        <item>Alfabètic</item>
+        <item>Última arrencada</item>
+        <item>Número d\'arrencades</item>
+    </string-array>
+    <string name="orderList">Ordre del llistat</string>
+    <string name="orderListDescription">Ordre de les aplicacions mostrades al widget</string>
+    <string name="widgetQueryTitle">Cerca a utilitzar al widget:</string>
+    <!-- Dialog applications options -->
+    <string name="optionsAppTitle">Accions per l\'aplicació</string>
+    <string-array name="optionsApp">
+        <item>Executa aplicació</item>
+        <item>Compartir aplicacio</item>
+        <item>Mostrar informació de l\'aplicació</item>
+    </string-array>
 </resources>
