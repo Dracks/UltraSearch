@@ -2,7 +2,7 @@ package es.jaumesingla.ultrasearch.search;
 
 import java.util.ArrayList;
 
-import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearchfree.R;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.viewlisteners.ShowOptions;
 

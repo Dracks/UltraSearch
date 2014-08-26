@@ -3,7 +3,6 @@ package es.jaumesingla.ultrasearch.settings;
 import junit.framework.Assert;
 
 import es.jaumesingla.ultrasearch.Constants;
-import es.jaumesingla.ultrasearch.Constants.ListOrder;
 import es.jaumesingla.ultrasearch.Constants.ListServiceUpdate;
 import es.jaumesingla.ultrasearch.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
@@ -64,6 +63,7 @@ public class SettingsActivity extends Activity {
 		adapter= ArrayAdapter.createFromResource(this,  R.array.service_update, android.R.layout.simple_spinner_item );
 		Assert.assertEquals(adapter.getCount(), listServiceUpdateValues.length);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
 		spinnerUpdateService.setAdapter(adapter);
 		
 		ListServiceUpdate option=ListServiceUpdate.valueOf(settings.getString(Constants.Preferences.UPDATE_SERVICE_KEY, ListServiceUpdate.TWO_DAYS.toString()));
@@ -74,7 +74,7 @@ public class SettingsActivity extends Activity {
 		
 		
 	}
-
+	
 	@Override
 	protected void onPause() {
 		super.onDestroy();

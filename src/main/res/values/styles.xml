@@ -1,10 +1,15 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--  <style name="AppTheme" parent="android:Theme.Light"> -->
-    <style name="AppTheme" parent="android:style/Theme.Light.NoTitleBar">
-    </style>
+    <style name="AppTheme" parent="android:style/Theme.Light.NoTitleBar"></style>
     <style name="AppTheme.TopMenu"></style>
     <style name="AppTheme.Dialog" parent="android:style/Theme.Dialog"></style>
+    <style name="AppTheme.Dialog.Content">
+        <item name="android:background">#FFF</item>
+    </style>
+    <style name="AppTheme.Dialog.TextCell">
+        <item name="android:textColor">#000</item>
+    </style>
     <style name="AppTheme.Dialog.ListItem"></style>
     
 </resources>

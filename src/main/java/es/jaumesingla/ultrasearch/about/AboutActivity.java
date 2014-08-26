@@ -1,6 +1,6 @@
 package es.jaumesingla.ultrasearch.about;
 
-import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearchfree.R;
 import android.app.Activity;
 import android.os.Bundle;
 

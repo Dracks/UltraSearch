@@ -13,6 +13,8 @@ import es.jaumesingla.ultrasearch.search.MainActivity;
 import es.jaumesingla.ultrasearch.search.viewlisteners.OptionsAppClickListener;
 import es.jaumesingla.ultrasearch.service.DatabaseUpdateReceiver;
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
+import es.jaumesingla.ultrasearchfree.R;
+
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Application;

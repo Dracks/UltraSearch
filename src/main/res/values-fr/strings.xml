@@ -1,6 +1,6 @@
 <resources>
     
-    <string name="app_name">Quick Apps Search</string>
+    <string name="app_name">Recherche rapide d\'Apps Gratuit</string>
     <string name="menu_settings">Paramètres</string>
     <string name="title_activity_main">Recherche rapide</string>
     <string name="app_not_found">L\'application est introuvable</string>
@@ -8,6 +8,8 @@
     <string name="shareTextTitle">Recherche rapide et Lancement d\'Applications</string>
     <string name="shareText">Recherche rapide et Lancement d\'Applications avec le %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
     <string name="shareTitle">Partagez avec vos amis</string>
+    <string name="shareThanks">Merci de l\'avoir partagé!</string>
+    <string name="shareThanksText">Merci d\'avoir partagé cette application, pour cela vous allez reçevoir %1$d jours sans ads sur cette application.</string>
     <string-array name="service_update">
         <item >Quotidien</item>
         <item >Un jour sur deux</item>

@@ -1,6 +1,6 @@
 <resources>
     
-    <string name="app_name">Quick Apps Search</string>
+    <string name="app_name">Quick Apps Search Versió gratuita</string>
     <string name="menu_settings">Configuració</string>
     <string name="title_activity_main">Quick Search</string>
     <string name="app_not_found">No s\'ha trobat l\'aplicació</string>
@@ -8,6 +8,8 @@
     <string name="shareTextTitle">Cerca i executa aplicacions ràpidament</string>
     <string name="shareText">Cerca i executa aplicacions ràpidament amb l\'aplicació %1$s application\nhttp://play.google.com/store/apps/details?id=%2$s</string>
     <string name="shareTitle">Comparteix amb els teus amics</string>
+    <string name="shareThanks">Gràcies per compartir-ho!</string>
+    <string name="shareThanksText">Gràcies per compartir aquesta aplicació, com agraïment disposes de %1$d dies sense anuncis en aquesta aplicació.</string>
     <string-array name="service_update">
         <item >Diari</item>
         <item >Cada dos dies</item>

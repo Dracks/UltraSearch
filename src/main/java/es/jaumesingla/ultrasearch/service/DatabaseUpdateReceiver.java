@@ -1,7 +1,7 @@
 package es.jaumesingla.ultrasearch.service;
 
 import junit.framework.Assert;
-import es.jaumesingla.ultrasearch.UltraSearchApp;
+import es.jaumesingla.ultrasearchfree.UltraSearchApp;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

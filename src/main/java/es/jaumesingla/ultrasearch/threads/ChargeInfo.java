@@ -12,9 +12,10 @@ import android.content.pm.ResolveInfo;
 import android.util.Log;
 //import android.util.Log;
 
-import es.jaumesingla.ultrasearch.UltraSearchApp;
+
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
 import es.jaumesingla.ultrasearch.search.MainActivity;
+import es.jaumesingla.ultrasearchfree.UltraSearchApp;
 
 public class ChargeInfo implements Runnable {
 	private static final String TAG = "ChargeInfo";
