@@ -13,6 +13,8 @@ import es.jaumesingla.ultrasearch.search.MainActivity;
 import es.jaumesingla.ultrasearch.search.viewlisteners.OptionsAppClickListener;
 import es.jaumesingla.ultrasearch.service.DatabaseUpdateReceiver;
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
+
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Application;
@@ -30,7 +32,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class UltraSearchApp extends Application {
-	
+
 	public interface DataBaseChanged{
 		public void onDataBaseChanged();
 	}
@@ -207,6 +209,15 @@ public class UltraSearchApp extends Application {
 		share.setType("text/plain");
 		share.putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id="+app.getPackageName());
 		startActivity(Intent.createChooser(share, getResources().getString(R.string.share)));
+	}
+
+	public void shareProgram(Activity activity) {
+		Intent share=new Intent(Intent.ACTION_SEND);
+		share.setType("text/plain");
+		share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
+		share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
+
+		startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
 	}
 
 	public void launchAutoUpdate(int triger) {

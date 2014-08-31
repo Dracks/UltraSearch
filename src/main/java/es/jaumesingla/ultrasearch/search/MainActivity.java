@@ -312,12 +312,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
             	startActivityForResult(settings, ACTIVITY_SETTINGS);
             	return true;
             case R.id.menu_share:
-            	share=new Intent(Intent.ACTION_SEND);
-				share.setType("text/plain");
-				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
-				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
-				
-				startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+            	UltraSearchApp.getInstance().shareProgram(this);
             	return true;
             case R.id.menu_contact:
             	share=new Intent(Intent.ACTION_SENDTO);
