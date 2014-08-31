@@ -1,5 +1,6 @@
 package es.jaumesingla.ultrasearch.search;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -50,7 +51,8 @@ public class AdvertisementActivity extends ActionBarActivity {
 		share.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// Share, require a commit
+				UltraSearchApp appInstance = UltraSearchApp.getInstance();
+				appInstance.shareProgram(AdvertisementActivity.this);
 			}
 		});
 
@@ -72,9 +74,11 @@ public class AdvertisementActivity extends ActionBarActivity {
 		UltraSearchApp appInstance = UltraSearchApp.getInstance();
 		switch (requestCode){
 			case Constants.Free.SHARE_ACTION:
-				appInstance.addDaysFreeAds();
-				appInstance.launchApp(app);
-				finish();
+				if (resultCode== Activity.RESULT_OK) {
+					appInstance.addDaysFreeAds();
+					appInstance.launchApp(app);
+					finish();
+				}
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);

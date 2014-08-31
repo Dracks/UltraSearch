@@ -14,6 +14,8 @@ import es.jaumesingla.ultrasearch.search.MainActivity;
 import es.jaumesingla.ultrasearch.search.viewlisteners.OptionsAppClickListener;
 import es.jaumesingla.ultrasearch.service.DatabaseUpdateReceiver;
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
+import es.jaumesingla.ultrasearchfree.R;
+import es.jaumesingla.ultrasearchfree.share.ShareLimitedActivity;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -192,7 +194,7 @@ public class UltraSearchApp extends Application {
 		Editor config = this.preferences.edit();
 		Log.d(TAG, "listWidget: "+widgetId+", "+x+", "+y);
 
-		config.putInt(Constants.Preferences.LIST_WIDGET_SPAN+"_x_"+widgetId, x);
+		config.putInt(Constants.Preferences.LIST_WIDGET_SPAN + "_x_" + widgetId, x);
 		config.putInt(Constants.Preferences.LIST_WIDGET_SPAN+"_y_"+widgetId, y);
 		config.commit();
 	}
@@ -250,12 +252,17 @@ public class UltraSearchApp extends Application {
 	}
 
 	public void shareProgram(Activity activity) {
-		Intent share=new Intent(Intent.ACTION_SEND);
+		Intent share = new Intent(activity, ShareLimitedActivity.class);
 		share.setType("text/plain");
 		share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
 		share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
 
-		startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+		share.putExtra(ShareLimitedActivity.FILTER_NAME, "twitter|plus|facebook");
+		share.putExtra(ShareLimitedActivity.TITLE_WINDOW, getString(R.string.shareTitle));
+		share.putExtra(ShareLimitedActivity.KEY_APPLICATION_NOT_FOUND, getString(R.string.app_not_found));
+
+		//startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
+		activity.startActivityForResult(share, Constants.Free.SHARE_ACTION);
 	}
 
 	public void launchAutoUpdate(int triger) {

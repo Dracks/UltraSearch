@@ -461,7 +461,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 			case ACTIVITY_SETTINGS:
 				this.setRequireRefresh();
 				break;
-			case SHARE_ACTION:
+			case Constants.Free.SHARE_ACTION:
 				if (resultCode==RESULT_OK){
 					UltraSearchApp.getInstance().addDaysFreeAds();
 					findViewById(R.id.adView).setVisibility(View.GONE);
