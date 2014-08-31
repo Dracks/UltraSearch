@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.Constants.ListServiceUpdate;
-import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearchfree.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.search.MainActivity;
 import es.jaumesingla.ultrasearch.Constants.ListMode;
@@ -25,7 +25,7 @@ public class SettingsActivity extends Activity {
 	private CheckBox updateOnStart;
 	
 	private ListServiceUpdate[] listServiceUpdateValues=ListServiceUpdate.values();
-	private ListOrder[]	listOrderListValues=ListOrder.values();
+	private Constants.ListOrder[]	listOrderListValues=Constants.ListOrder.values();
 	private Spinner spinnerOrderList;
 	
 	@Override
@@ -56,7 +56,7 @@ public class SettingsActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOrderList.setAdapter(adapter);
         
-        ListOrder orderOption=ListOrder.valueOf(settings.getString(Constants.Preferences.LIST_ORDER, ListOrder.ALPHABETIC.toString()));
+        Constants.ListOrder orderOption= Constants.ListOrder.valueOf(settings.getString(Constants.Preferences.LIST_ORDER, Constants.ListOrder.ALPHABETIC.toString()));
         
         spinnerOrderList.setSelection(getListOrderIndex(orderOption));
 		
@@ -114,7 +114,7 @@ public class SettingsActivity extends Activity {
 		return 0;
 	}
 	
-	private int getListOrderIndex(ListOrder orderOption) {
+	private int getListOrderIndex(Constants.ListOrder orderOption) {
 		for (int i=0; i<listOrderListValues.length; i++){
 			if (listOrderListValues[i]==orderOption){
 				return i;

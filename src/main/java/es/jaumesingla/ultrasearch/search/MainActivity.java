@@ -21,13 +21,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-//import android.app.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -302,32 +299,17 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	}
 	
 	private void refreshSettings(){
-		SharedPreferences preferences = UltraSearchApp.getInstance().getPreferences();
+		UltraSearchApp app=UltraSearchApp.getInstance();
+		SharedPreferences preferences = app.getPreferences();
         listMode=ListMode.valueOf(preferences.getString(Constants.Preferences.LIST_MODE_KEY, ListMode.LIST.toString()));
-        timeBloquedAds=preferences.getLong(Free.TIME_BLOQUED_ADS_KEY, 0);
+        timeBloquedAds=app.getEndFreeAds();
 	}
 	
 	protected void launchFirst(){
 		if (listAdapter.getCount()>0)
 			UltraSearchApp.getInstance().launchApp(listAdapter.getItem(0));
 	}
-	
-	protected void launchApp(InfoLaunchApplication app) {
-		//Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName.resolvePackageName);
-		//if (mIntent != null) {
-		Intent mIntent=new Intent();
-		ComponentName name = new ComponentName(app.getPackageName(), app.getActivity());
-		mIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-		mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		mIntent.setComponent(name);
-		try {
-			startActivity(mIntent);
-		} catch (ActivityNotFoundException err) {
-			Toast t = Toast.makeText(getApplicationContext(),
-					R.string.app_not_found, Toast.LENGTH_SHORT);
-			t.show();
-		}
-	}
+
 	
 	protected void launchMarket(){
 		Intent share=new Intent(Intent.ACTION_VIEW);
@@ -501,8 +483,17 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode==ACTIVITY_SETTINGS){
-			this.setRequireRefresh();
+		switch  (requestCode){
+			case ACTIVITY_SETTINGS:
+				this.setRequireRefresh();
+				break;
+			case SHARE_ACTION:
+				if (resultCode==RESULT_OK){
+					UltraSearchApp.getInstance().addDaysFreeAds();
+					findViewById(R.id.adView).setVisibility(View.GONE);
+				}
+				break;
+			default:
 		}
 	}
 }

@@ -34,4 +34,14 @@ public class Constants {
 		public static final int DAYS=1000*3600*24;
 		public static final int DAYS_STATISTICS=33;
 	}
+
+	public static class Free{
+		public static final int NEXT_SPAM_ACTIVITY_SHOW=12*3600; // In seconds
+		public static final int DAYS_FREE_PRESENT=15;
+		public static final String 	TIME_BLOQUED_ADS_KEY="timeBloquedAds";
+		public static final String NEXT_SPAM_ACTIVITY_SHOW_KEY = "spamActivityShow";
+		public static final String APP_INFO_KEY = "AppInfo";
+		public static final int SPAM_ACTIVITY_TIME = 10;
+		public static final int SHARE_ACTION = 13;
+	}
 }

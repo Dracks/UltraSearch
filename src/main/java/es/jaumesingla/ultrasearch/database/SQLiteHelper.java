@@ -1,8 +1,8 @@
 package es.jaumesingla.ultrasearch.database;
 
-import es.jaumesingla.ultrasearchfree.Constants;
-import es.jaumesingla.ultrasearchfree.UltraSearchApp;
-import es.jaumesingla.ultrasearchfree.Constants.Database;
+import es.jaumesingla.ultrasearch.Constants;
+import es.jaumesingla.ultrasearch.UltraSearchApp;
+import es.jaumesingla.ultrasearch.Constants.Database;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.DatabaseErrorHandler;

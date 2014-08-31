@@ -1,7 +1,7 @@
 package es.jaumesingla.ultrasearch.service;
 
 import junit.framework.Assert;
-import es.jaumesingla.ultrasearchfree.UltraSearchApp;
+import es.jaumesingla.ultrasearch.UltraSearchApp;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;

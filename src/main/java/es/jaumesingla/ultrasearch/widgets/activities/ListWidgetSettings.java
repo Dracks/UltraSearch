@@ -3,7 +3,7 @@ package es.jaumesingla.ultrasearch.widgets.activities;
 import android.view.KeyEvent;
 import android.widget.*;
 import es.jaumesingla.ultrasearch.Constants;
-import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearchfree.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;

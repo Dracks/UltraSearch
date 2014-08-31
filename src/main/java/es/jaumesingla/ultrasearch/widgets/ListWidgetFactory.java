@@ -7,7 +7,7 @@ import java.util.Comparator;
 import junit.framework.Assert;
 
 import es.jaumesingla.ultrasearch.Constants;
-import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearchfree.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.database.Scheme.Applications;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;

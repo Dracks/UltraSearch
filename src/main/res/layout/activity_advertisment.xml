@@ -1,0 +1,108 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="15dip"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Thanks to use my application"
+        android:id="@+id/thanksText"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="this banner show disapear in a fews moments"
+        android:id="@+id/waitText"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="You can support my looking my applications:"
+        android:id="@+id/supportText"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/stackCalculatorRow"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stackCalculatorImage"
+            android:src="@drawable/ic_launcher"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Stack Calculator"
+            android:id="@+id/stackCalculatorTitle"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ultraSearchRow"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ultraSearchImage"
+            android:src="@drawable/ic_launcher"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="UltraSearch"
+            android:id="@+id/ultraSearchTitle"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Or you can share my application\nto disable the ads for a time"
+        android:id="@+id/shareText"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_weight="1"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share"
+        android:id="@+id/shareButton"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

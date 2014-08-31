@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <string name="app_name">Quick Apps Search Free</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Quick Search</string>
@@ -10,42 +11,52 @@
     <string name="shareTitle">Share with your friends</string>
     <string name="shareThanks">Thanks to share it!</string>
     <string name="shareThanksText">Thanks to share this application, for that you recive %1$d days without ads in this application.</string>
+
     <string-array name="service_update">
-        <item >Daily</item>
-        <item >Every two days</item>
-        <item >Weekly</item>
-        <item >Monthly</item>
-        <item >Never</item>
+        <item>Daily</item>
+        <item>Every two days</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Never</item>
     </string-array>
-	<string name="contact">Contact</string>
-	<string name="about">About</string>
-	<string name="search_in_market">Search <i>%1$s</i> in Google Play</string>
-	<string name="resultsList">List results mode</string>
-	<string name="resultsListDescription">Show search results in a list, or using buttons optimizing screen width</string>
-	<string name="resultsList_Grid">Grid buttons</string>
-	<string name="resultsList_List">List</string>
-	<string name="updateDatabase">Update database</string>
-	<string name="updateDatabaseDescription">The preferred interval of time between updates of the application database</string>
-	<string name="loadOnStart">Refresh on start</string>
-	<string name="loadOnStartDescription">Update database when application starts, don\'t enable if you have selected some update interval.</string>
-	<string name="programmed">Programmed by:</string>
-	<string name="dessigned">Designed by:</string>
-	<string name="thanks">Thanks to:</string>
-	<!-- Widgets update -->
+
+    <string name="contact">Contact</string>
+    <string name="about">About</string>
+    <string name="search_in_market">Search <i>%1$s</i> in Google Play</string>
+    <string name="resultsList">List results mode</string>
+    <string name="resultsListDescription">Show search results in a list, or using buttons optimizing screen width</string>
+    <string name="resultsList_Grid">Grid buttons</string>
+    <string name="resultsList_List">List</string>
+    <string name="updateDatabase">Update database</string>
+    <string name="updateDatabaseDescription">The preferred interval of time between updates of the application database</string>
+    <string name="loadOnStart">Refresh on start</string>
+    <string name="loadOnStartDescription">Update database when application starts, don\'t enable if you have selected some update interval.</string>
+    <string name="programmed">Programmed by:</string>
+    <string name="dessigned">Designed by:</string>
+    <string name="thanks">Thanks to:</string>
+    <!-- Widgets update -->
     <string name="save">Save</string>
+
     <string-array name="widget_order">
         <item>Alphabetic</item>
         <item>Last launch</item>
         <item>Launch count</item>
     </string-array>
+
     <string name="orderList">Order List</string>
     <string name="orderListDescription">Applications order showed in the list</string>
     <string name="widgetQueryTitle">Search to use in the widget:</string>
     <!-- Dialog applications options -->
     <string name="optionsAppTitle">Actions application</string>
+
     <string-array name="optionsApp">
         <item>Launch application</item>
         <item>Share application</item>
         <item>Show application information</item>
     </string-array>
+
+    <!-- Advertisment activity -->
+
+    <string name="title_activity_advertisment">AdvertismentActivity</string>
+
 </resources>

@@ -9,6 +9,7 @@ import es.jaumesingla.ultrasearch.Constants.ListServiceUpdate;
 import es.jaumesingla.ultrasearch.database.DataBaseInterface;
 import es.jaumesingla.ultrasearch.database.Scheme;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
+import es.jaumesingla.ultrasearch.search.AdvertisementActivity;
 import es.jaumesingla.ultrasearch.search.MainActivity;
 import es.jaumesingla.ultrasearch.search.viewlisteners.OptionsAppClickListener;
 import es.jaumesingla.ultrasearch.service.DatabaseUpdateReceiver;
@@ -21,7 +22,6 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -138,6 +138,35 @@ public class UltraSearchApp extends Application {
 		
 	}
 
+	public long getEndFreeAds(){
+		return preferences.getLong(Constants.Free.TIME_BLOQUED_ADS_KEY, 0);
+	}
+
+	public void addDaysFreeAds(){
+		long now=System.currentTimeMillis()/1000;
+		long addTime=Constants.Free.DAYS_FREE_PRESENT*24*3600;
+		long timeBloquedAds=preferences.getLong(Constants.Free.TIME_BLOQUED_ADS_KEY, 0);
+		if (timeBloquedAds<now){
+			timeBloquedAds=now+addTime;
+		} else {
+			timeBloquedAds+=addTime;
+		}
+
+		SharedPreferences.Editor settings = preferences.edit();
+		settings.putLong(Constants.Free.TIME_BLOQUED_ADS_KEY, timeBloquedAds);
+		settings.apply();
+	}
+
+	public long getNextSpamActivity(){
+		return preferences.getLong(Constants.Free.NEXT_SPAM_ACTIVITY_SHOW_KEY, 0);
+	}
+
+	public void setNextSpamActivity(){
+		SharedPreferences.Editor settings = preferences.edit();
+		settings.putLong(Constants.Free.NEXT_SPAM_ACTIVITY_SHOW_KEY, Constants.Free.NEXT_SPAM_ACTIVITY_SHOW+System.currentTimeMillis()/1000);
+		settings.apply();
+	}
+
     public void setListWidgetConfiguration(int widgetId, Constants.ListOrder order, String query){
         Editor config = this.preferences.edit();
 
@@ -198,10 +227,19 @@ public class UltraSearchApp extends Application {
 	}
 
 	public void launchApplicationInfo(InfoLaunchApplication app){
-		Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", app.getPackageName(), null));
-		// start new activity to display extended information
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		this.startActivity(intent);
+		Intent intent=null;
+		long now=System.currentTimeMillis()/1000;
+		if (now<getNextSpamActivity() || now < getEndFreeAds()) {
+			intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", app.getPackageName(), null));
+			// start new activity to display extended information
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			this.startActivity(intent);
+		} else {
+			setNextSpamActivity();
+			intent = new Intent(this, AdvertisementActivity.class);
+			intent.putExtra(Constants.Free.APP_INFO_KEY, app);
+			this.startActivity(intent);
+		}
 	}
 
 	public void shareApplicationInfo(InfoLaunchApplication app){

@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import es.jaumesingla.ultrasearch.Constants;
-import es.jaumesingla.ultrasearch.R;
+import es.jaumesingla.ultrasearchfree.R;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
 import es.jaumesingla.ultrasearch.database.Scheme;
 import es.jaumesingla.ultrasearch.model.InfoLaunchApplication;
