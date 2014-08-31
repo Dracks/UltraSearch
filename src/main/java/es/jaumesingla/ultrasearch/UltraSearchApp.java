@@ -121,10 +121,10 @@ public class UltraSearchApp extends Application {
 	private void createConfiguration() {
 		Editor config = this.preferences.edit();
 		config.putInt(Constants.Preferences.VERSION_KEY, Constants.Preferences.VERSION);
-		config.putBoolean(Constants.Preferences.UPDATE_DB_ON_START, false);
+		config.putBoolean(Constants.Preferences.UPDATE_DB_ON_START, true);
 		config.putString(Constants.Preferences.LIST_MODE_KEY, ListMode.LIST.toString());
-		config.putString(Constants.Preferences.UPDATE_SERVICE_KEY, ListServiceUpdate.TWO_DAYS.toString());
-		config.putString(Constants.Preferences.LIST_ORDER, ListOrder.ALPHABETIC.toString());
+		config.putString(Constants.Preferences.UPDATE_SERVICE_KEY, ListServiceUpdate.NEVER.toString());
+		config.putString(Constants.Preferences.LIST_ORDER, ListOrder.LAST_RUN.toString());
 		config.commit();
 	}
 
