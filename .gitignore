@@ -7,3 +7,5 @@
 .DS_Store
 .idea/
 UltraSearch.iml
+/build
+/app.iml

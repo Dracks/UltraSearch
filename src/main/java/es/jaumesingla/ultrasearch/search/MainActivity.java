@@ -2,7 +2,6 @@ package es.jaumesingla.ultrasearch.search;
 
 import java.util.ArrayList;
 
-
 import es.jaumesingla.ultrasearch.Constants;
 import es.jaumesingla.ultrasearch.Constants.ListMode;
 import es.jaumesingla.ultrasearch.UltraSearchApp;
@@ -63,8 +62,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	private static final int ACTIVITY_SETTINGS = 3;
 
 	private final String TAG="MainActivity";
-	
-	protected static final int SHARE_ACTION = 0;
 
     //@SuppressLint("NewApi")
 	
@@ -202,7 +199,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
         et.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -286,7 +282,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
 	    // We need a fake parent
 	    FrameLayout buffer = new FrameLayout( context );
 	    android.widget.AbsListView.LayoutParams layoutParams = new  android.widget.AbsListView.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-	    buffer.addView(cell, layoutParams);
+	    buffer.addView( cell, layoutParams);
 
 	    cell.forceLayout();
 	    cell.measure(1000, 1000);
@@ -309,7 +305,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
 		if (listAdapter.getCount()>0)
 			UltraSearchApp.getInstance().launchApp(listAdapter.getItem(0));
 	}
-
 	
 	protected void launchMarket(){
 		Intent share=new Intent(Intent.ACTION_VIEW);
@@ -317,8 +312,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
     	share.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
     	startActivity(Intent.createChooser(share, "-- Search in market"));
 	}
-	
-	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -339,25 +332,7 @@ public class MainActivity extends Activity implements DataBaseChanged{
             	startActivityForResult(settings, ACTIVITY_SETTINGS);
             	return true;
             case R.id.menu_share:
-            	/*
-            	share=new Intent(Intent.ACTION_SEND);
-				share.setType("text/plain");
-				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
-				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
-				
-				startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
-				*/
-            	share=new Intent(MainActivity.this,ShareLimitedActivity.class);
-				share.setType("text/plain");
-				share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
-				share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
-				
-				share.putExtra(ShareLimitedActivity.FILTER_NAME, "twitter|plus|facebook");
-				share.putExtra(ShareLimitedActivity.TITLE_WINDOW, getString(R.string.shareTitle));
-				share.putExtra(ShareLimitedActivity.KEY_APPLICATION_NOT_FOUND, getString(R.string.app_not_found));
-				
-				//startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
-				startActivityForResult(share, SHARE_ACTION);
+            	UltraSearchApp.getInstance().shareProgram(this);
             	return true;
             case R.id.menu_contact:
             	share=new Intent(Intent.ACTION_SENDTO);
@@ -471,7 +446,6 @@ public class MainActivity extends Activity implements DataBaseChanged{
 				MainActivity.this.setRequireRefresh();
 			}
 		}).execute();
-		
 	}
 
 

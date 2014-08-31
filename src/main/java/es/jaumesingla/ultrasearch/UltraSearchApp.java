@@ -14,8 +14,8 @@ import es.jaumesingla.ultrasearch.search.MainActivity;
 import es.jaumesingla.ultrasearch.search.viewlisteners.OptionsAppClickListener;
 import es.jaumesingla.ultrasearch.service.DatabaseUpdateReceiver;
 import es.jaumesingla.ultrasearch.threads.ChargeInfo;
-import es.jaumesingla.ultrasearchfree.R;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Application;
@@ -121,10 +121,10 @@ public class UltraSearchApp extends Application {
 	private void createConfiguration() {
 		Editor config = this.preferences.edit();
 		config.putInt(Constants.Preferences.VERSION_KEY, Constants.Preferences.VERSION);
-		config.putBoolean(Constants.Preferences.UPDATE_DB_ON_START, false);
+		config.putBoolean(Constants.Preferences.UPDATE_DB_ON_START, true);
 		config.putString(Constants.Preferences.LIST_MODE_KEY, ListMode.LIST.toString());
-		config.putString(Constants.Preferences.UPDATE_SERVICE_KEY, ListServiceUpdate.TWO_DAYS.toString());
-		config.putString(Constants.Preferences.LIST_ORDER, ListOrder.ALPHABETIC.toString());
+		config.putString(Constants.Preferences.UPDATE_SERVICE_KEY, ListServiceUpdate.NEVER.toString());
+		config.putString(Constants.Preferences.LIST_ORDER, ListOrder.LAST_RUN.toString());
 		config.commit();
 	}
 
@@ -247,6 +247,15 @@ public class UltraSearchApp extends Application {
 		share.setType("text/plain");
 		share.putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id="+app.getPackageName());
 		startActivity(Intent.createChooser(share, getResources().getString(R.string.share)));
+	}
+
+	public void shareProgram(Activity activity) {
+		Intent share=new Intent(Intent.ACTION_SEND);
+		share.setType("text/plain");
+		share.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareTextTitle));
+		share.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.shareText), getString(R.string.app_name), getPackageName()));
+
+		startActivity(Intent.createChooser(share, getString(R.string.shareTitle)));
 	}
 
 	public void launchAutoUpdate(int triger) {
